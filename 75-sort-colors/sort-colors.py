@@ -3,25 +3,44 @@ class Solution:
         """
         Do not return anything, modify nums in-place instead.
         """
-        
-        arr = nums
-        cnt0 = 0
-        cnt1 = 0
-        cnt2 = 0
+        # O(N)
 
-        for num in arr:
-            if num == 0:
-                cnt0 += 1
-            elif num == 1:
-                cnt1 += 1
+        low = 0
+        mid = 0
+        high = len(nums) - 1
+
+        while mid <= high:
+            if nums[mid] == 0:
+                nums[low], nums[mid] = nums[mid], nums[low]
+                low += 1
+                mid += 1
+            elif nums[mid] == 1:
+                mid += 1
             else:
-                cnt2 += 1
+                nums[mid], nums[high] = nums[high], nums[mid]
+                high -= 1
 
-        for i in range(cnt0):
-            arr[i] = 0
 
-        for i in range(cnt0, cnt0 + cnt1):
-            arr[i] = 1
+        # # O(2N)
 
-        for i in range(cnt0 + cnt1, len(arr)):
-            arr[i] = 2
+        # arr = nums
+        # cnt0 = 0
+        # cnt1 = 0
+        # cnt2 = 0
+
+        # for num in arr:
+        #     if num == 0:
+        #         cnt0 += 1
+        #     elif num == 1:
+        #         cnt1 += 1
+        #     else:
+        #         cnt2 += 1
+
+        # for i in range(cnt0):
+        #     arr[i] = 0
+
+        # for i in range(cnt0, cnt0 + cnt1):
+        #     arr[i] = 1
+
+        # for i in range(cnt0 + cnt1, len(arr)):
+        #     arr[i] = 2
