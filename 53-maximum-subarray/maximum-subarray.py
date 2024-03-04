@@ -1,15 +1,11 @@
-import sys
 class Solution:
     def maxSubArray(self, nums: List[int]) -> int:
-        arr = nums
-        n = len(arr)
-
-        maxi = -sys.maxsize - 1  # maximum sum
+        maxi = float('-inf')
         sum = 0
 
-        for i in range(n):
+        for i in range(len(nums)):
 
-            sum += arr[i]
+            sum += nums[i]
 
             if sum > maxi:
                 maxi = sum
@@ -17,5 +13,5 @@ class Solution:
             # If sum < 0: discard the sum calculated
             if sum < 0:
                 sum = 0
-                
+
         return maxi
