@@ -27,7 +27,6 @@ class Solution:
             # If you find any break case, increment the break variable
             if nums[i] < nums[i-1]:
                 breaks += 1
-                print(breaks)
         
         # If there is atmost 1 breaks, return True
         # Else, return False
