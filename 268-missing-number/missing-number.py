@@ -3,9 +3,6 @@ class Solution:
         n = len(nums)
         sum_n = (n*(n+1))//2
 
-        sum_list = 0
-
-        for i in nums:
-            sum_list += i
+        sum_list = sum(nums)
         
         return sum_n - sum_list
