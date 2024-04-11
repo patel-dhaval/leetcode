@@ -1,14 +1,13 @@
 class Solution:
     def twoSum(self, nums: List[int], target: int) -> List[int]:
-        check = 0
-        res = []
-        i = 0 
         hmap = {}
+        i = 0
 
-        while i <= len(nums)-1:
-            check = target - nums[i]
-            if check in hmap:
-                return [i,hmap[check]]
+        while i < len(nums):
+            if target - nums[i] in hmap:
+                return [i, hmap[target - nums[i]]]
             else:
-                hmap[nums[i]] = i
-            i +=1
+                hmap[nums[i]] =  i
+            i+=1
+            # print(hmap)
+
