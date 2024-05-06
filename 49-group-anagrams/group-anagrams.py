@@ -1,10 +1,23 @@
 class Solution:
     def groupAnagrams(self, strs: List[str]) -> List[List[str]]:
-        ans = collections.defaultdict(list)
+        hmap = defaultdict()
+        freq_arr = [0] * 26
+        soln = []
 
         for s in strs:
-            count = [0] * 26
-            for c in s:
-                count[ord(c) - ord("a")] += 1
-            ans[tuple(count)].append(s)
-        return ans.values()
+            temp_arr = [0] * 26
+            for i in range(0, len(s)):
+                temp_arr[ord(s[i]) - ord('a')] += 1
+            if tuple(temp_arr) in hmap.keys():
+                temp_val = hmap[tuple(temp_arr)]
+                temp_val.append(s)
+                hmap[tuple(temp_arr)] = temp_val
+            else:
+                hmap[tuple(temp_arr)] = [s]
+        
+        for v in hmap.values():
+            soln.append(v)
+        
+        return soln        
+
+            
