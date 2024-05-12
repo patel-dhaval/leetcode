@@ -5,7 +5,8 @@ class Solution:
 
         while r > l:
             vol = min(height[r],height[l]) * (r-l)
-            maxVol = max(maxVol, vol)
+            if vol > maxVol:
+                maxVol = vol
             # print(maxVol)
             if height[l] < height[r]:
                 l+=1
