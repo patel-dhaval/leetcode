@@ -12,32 +12,32 @@ class Solution:
 
         # return 1 + max(self.maxDepth(root.left), self.maxDepth(root.right))
 
-        # stack = [[root, 1]]
-        # res = 0
+        stack = [[root, 1]]
+        res = 0
 
-        # while stack:
-        #     node, depth = stack.pop()
+        while stack:
+            node, depth = stack.pop()
 
-        #     if node:
-        #         res = max(res, depth)
-        #         stack.append([node.left, depth + 1])
-        #         stack.append([node.right, depth + 1])
-        # return res
+            if node:
+                res = max(res, depth)
+                stack.append([node.left, depth + 1])
+                stack.append([node.right, depth + 1])
+        return res
             
 
-        q = deque()
-        if root:
-            q.append(root)
+        # q = deque()
+        # if root:
+        #     q.append(root)
 
-        level = 0
+        # level = 0
 
-        while q:
+        # while q:
 
-            for i in range(len(q)):
-                node = q.popleft()
-                if node.left:
-                    q.append(node.left)
-                if node.right:
-                    q.append(node.right)
-            level += 1
-        return level
+        #     for i in range(len(q)):
+        #         node = q.popleft()
+        #         if node.left:
+        #             q.append(node.left)
+        #         if node.right:
+        #             q.append(node.right)
+        #     level += 1
+        # return level
