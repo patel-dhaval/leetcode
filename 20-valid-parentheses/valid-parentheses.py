@@ -1,15 +1,24 @@
 class Solution:
     def isValid(self, s: str) -> bool:
-        stk = []
-        hmap = {')': '(', '}':'{', ']':'[' }
+        bracketMap = {'}': '{', ')':'(', ']':'['}
+        stack = []
 
-        for c in s:
-            if c not in hmap:
-                stk.append(c)
-                continue
-            if not stk or stk[-1] != hmap[c]:
-                return False
-            stk.pop()
-
-        return not stk
+        if len(s) < 2:
+            return False
         
+        for i in range(len(s)):
+            if s[i] not in bracketMap:
+                stack.append(s[i])
+            elif s[i] in bracketMap and stack:
+                top = stack.pop()
+                if bracketMap[s[i]] != top:
+                    return False
+            else:
+                return False
+            
+            
+        if not stack:
+            return True
+        else:
+            return False
+          
