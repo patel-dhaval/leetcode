@@ -5,24 +5,19 @@ class Solution:
         queue = collections.deque()
         directions = [[0,1], [0, -1], [1,0], [-1, 0]]
 
-        fresh_orange = False
+        fresh = 0
+        time = 0
 
         for r in range(row_count):
             for c in range(col_count):
                 if grid[r][c] == 1:
-                    fresh_orange = True
-        
-        if not fresh_orange:
-            return 0
-
-        for r in range(row_count):
-            for c in range(col_count):
+                    fresh += 1
                 if grid[r][c] == 2:
                     queue.append((r,c,0))
-        
-        while queue:
-            r, c, time = queue.popleft()
 
+        while fresh >= 0 and queue:
+            r, c, time = queue.popleft()
+            print("Time", time, queue, fresh)
             for dr, dc in directions:
                 row = r + dr
                 col = c + dc
@@ -34,13 +29,7 @@ class Solution:
                     grid[row][col] == 1):
 
                     grid[row][col] = 2
-
                     queue.append((row, col, time + 1))
+                    fresh -= 1
         
-        for r in range(row_count):
-            for c in range(col_count):
-                if grid[r][c] == 1:
-                    return -1
-        
-        return time
-
+        return time if fresh == 0 else -1
