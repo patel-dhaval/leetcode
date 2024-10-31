@@ -1,35 +1,47 @@
+from typing import List
+
 class Solution:
     def pacificAtlantic(self, heights: List[List[int]]) -> List[List[int]]:
-        ROWS, COLS = len(heights), len(heights[0])
-        pac, atl = set(), set()
-
-        def dfs(r, c, visit, prevHeight):
-            if (
-                (r, c) in visit
-                or r < 0
-                or c < 0
-                or r == ROWS
-                or c == COLS
-                or heights[r][c] < prevHeight
-            ):
-                return
-            visit.add((r, c))
-            dfs(r + 1, c, visit, heights[r][c])
-            dfs(r - 1, c, visit, heights[r][c])
-            dfs(r, c + 1, visit, heights[r][c])
-            dfs(r, c - 1, visit, heights[r][c])
-
-        for c in range(COLS):
-            dfs(0, c, pac, heights[0][c])
-            dfs(ROWS - 1, c, atl, heights[ROWS - 1][c])
-
-        for r in range(ROWS):
-            dfs(r, 0, pac, heights[r][0])
-            dfs(r, COLS - 1, atl, heights[r][COLS - 1])
-
+        row_count = len(heights)
+        col_count = len(heights[0])
         res = []
-        for r in range(ROWS):
-            for c in range(COLS):
-                if (r, c) in pac and (r, c) in atl:
+        visited_atl = set()
+        visited_pac = set()
+
+        directions = [[0, -1], [0, 1], [1, 0], [-1, 0]]
+
+
+        def dfs_atl(r, c):
+            visited_atl.add((r, c))
+            for dr, dc in directions:
+                row, col = r + dr, c + dc
+                if (0 <= row < row_count and
+                    0 <= col < col_count and
+                    heights[row][col] >= heights[r][c] and
+                    (row, col) not in visited_atl):
+                    dfs_atl(row, col)
+
+        def dfs_pac(r, c):
+            visited_pac.add((r, c))
+            for dr, dc in directions:
+                row, col = r + dr, c + dc
+                if (0 <= row < row_count and
+                    0 <= col < col_count and
+                    heights[row][col] >= heights[r][c] and
+                    (row, col) not in visited_pac):
+                    dfs_pac(row, col)
+
+        for c in range(col_count):
+            dfs_pac(0, c)
+            dfs_atl(row_count - 1, c)
+
+        for r in range(row_count):
+            dfs_pac(r, 0)
+            dfs_atl(r, col_count - 1) 
+
+        for r in range(row_count):
+            for c in range(col_count):
+                if (r, c) in visited_atl and (r, c) in visited_pac:
                     res.append([r, c])
+
         return res
