@@ -5,12 +5,11 @@ class Solution:
         visit = set()
         length = 0
 
-        directions = [[0,1],[0, -1], [1, 0], [-1, 0], [1, 1], [1, -1], [-1, 1], [-1, -1]]
-
-        
         if grid[0][0] == 1 or grid[(rows -1)][(cols-1)] == 1:
             return -1
-        
+
+        directions = [[0,1],[0, -1], [1, 0], [-1, 0], [1, 1], [1, -1], [-1, 1], [-1, -1]]
+
         queue.append((0, 0))
         visit.add((0,0))
         length +=1
