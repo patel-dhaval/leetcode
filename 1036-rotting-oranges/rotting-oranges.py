@@ -22,7 +22,6 @@ class Solution:
         
         while queue:
             r, c, time = queue.popleft()
-            print("Time", time)
             for dr, dc in directions:
                 row = r + dr
                 col = c + dc
