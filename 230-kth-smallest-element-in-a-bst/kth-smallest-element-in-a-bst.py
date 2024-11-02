@@ -8,16 +8,12 @@ class Solution:
     def kthSmallest(self, root: Optional[TreeNode], k: int) -> int:
         stk = []
         curr = root
-        while True:
-            if curr:
+        while curr or stk:
+            while curr:
                 stk.append(curr)
                 curr = curr.left
-            elif stk:
-                curr = stk.pop()
-                k -= 1
-                print(curr.val)
-                if k == 0:
-                    return curr.val
-                curr = curr.right
-            else:
-                break
+            curr = stk.pop()
+            k -= 1
+            if k == 0:
+                return curr.val
+            curr = curr.right
