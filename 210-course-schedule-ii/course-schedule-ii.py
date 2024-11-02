@@ -12,21 +12,17 @@ class Solution:
             if indegree[node] == 0:
                 queue.append(node)
 
-        print(adj)
-
-        finish, output = 0, []
+        output = []
         while queue:
             curr = queue.popleft()
             output.append(curr)
-            finish += 1
 
             for nei in adj[curr]:
                 indegree[nei] -= 1
 
                 if indegree[nei] == 0:
                     queue.append(nei)
-
-        if finish != numCourses:
+        if len(output) != numCourses:
             return []
         else:
             return output[:: -1]
