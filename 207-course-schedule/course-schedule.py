@@ -9,18 +9,19 @@ class Solution:
                 adj_map[course[1]].append(course[0])
             else:
                 adj_map[course[1]] = [course[0]]
+            if course[0] not in adj_map:
+                adj_map[course[0]] = []
 
         def dfs(node):
-
             if node in visited:
                 return False
             if adj_map[node] == []:
                 return True
 
             visited.add(node)
-
             for neighbor in adj_map[node]:
                 if not dfs(neighbor): return False
+
             visited.remove(node)
             adj_map[node] = []
             return True
