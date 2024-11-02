@@ -4,9 +4,9 @@ class Solution:
         queue = collections.deque()
         
         adj = [[] for i in range(numCourses)]
-        for src, dst in prerequisites:
-            indegree[dst] += 1
-            adj[src].append(dst)
+        for nxt, pre in prerequisites:
+            indegree[nxt] += 1
+            adj[pre].append(nxt)
         
         for node in range(numCourses):
             if indegree[node] == 0:
@@ -25,4 +25,4 @@ class Solution:
         if len(output) != numCourses:
             return []
         else:
-            return output[:: -1]
+            return output
