@@ -10,13 +10,16 @@ class Solution:
         max_path_val = float("-inf")
 
         def dfs(root, max_path_val):
+            nonlocal result
             if not root:
                 return 0
             
-            result = 1 if root.val >= max_path_val else 0
+            if root.val >= max_path_val:
+                result += 1
             max_path_val = max(max_path_val, root.val)
-            result += dfs(root.left, max_path_val)
-            result += dfs(root.right, max_path_val)
+
+            dfs(root.left, max_path_val)
+            dfs(root.right, max_path_val)
 
             return result
 
