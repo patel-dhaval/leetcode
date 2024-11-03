@@ -5,7 +5,6 @@
 #         self.left = left
 #         self.right = right
 class Solution:
-
     def isBalanced(self, root: Optional[TreeNode]) -> bool:
 
         def dfs_height(root):
@@ -27,5 +26,5 @@ class Solution:
         if dfs_height(root) == -1:
             return False
         return True
+            
 
-        
