@@ -12,13 +12,12 @@ class Solution:
         queue = collections.deque()
         res = []
         queue.append(root)
-        
+
         while queue:
-            len_q = len(queue)
+            level_len = len(queue)
             for i in range(len(queue)):
                 curr = queue.popleft()
-                print(i, len(queue))
-                if i == len_q - 1:
+                if i == level_len - 1:
                     res.append(curr.val)
                 if curr.left:
                     queue.append(curr.left)
