@@ -13,15 +13,11 @@ class Solution:
             if not root:
                 return 0
             
-            result = 0
-
-            if root.val >= max_path_val:
-                max_path_val = root.val
-                result +=1
-            
+            result = 1 if root.val >= max_path_val else 0
+            max_path_val = max(max_path_val, root.val)
             result += dfs(root.left, max_path_val)
             result += dfs(root.right, max_path_val)
-            print("res", result)
+
             return result
 
         return dfs(root, max_path_val)
