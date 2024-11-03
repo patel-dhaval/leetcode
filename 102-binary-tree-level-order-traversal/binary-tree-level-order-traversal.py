@@ -11,20 +11,21 @@ class Solution:
         if not root:
             return []
 
-        q = deque()
-
-        if root:
-            q.append(root)
-
         res = []
-        while q:
-            tempRes = []
-            for i in range(len(q)):
-                curr = q.popleft()
-                tempRes.append(curr.val)
+        queue = collections.deque()
+
+        queue.append(root)
+
+        while queue:
+            temp = []
+            for _ in range(len(queue)):
+                curr = queue.popleft()
+                temp.append(curr.val)
                 if curr.left:
-                    q.append(curr.left)
+                    queue.append(curr.left)
                 if curr.right:
-                    q.append(curr.right)
-            res.append(tempRes)
+                    queue.append(curr.right)
+            
+            res.append(temp)
+
         return res
