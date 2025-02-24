@@ -8,15 +8,14 @@ return 0
 
 L, R = 0, 1
 buyP = prices[L]
-sellP = prices[R]
 maxP = 0
 
 while R < len(prices):
+    sellP= prices[R]
     if buyP > sellP:
         L = R
-        buyP = nums[L]
+        buyP = prices[L]
         R = R + 1
-        sellP= nums[R]
     else:
         profit = sellP - buyP
         maxProfit = max(profit, maxProfit)
@@ -40,10 +39,6 @@ SellP = 5
 
 profit = 2
 maxP = 4
-
-
-
-
 '''
 class Solution:
     def maxProfit(self, prices: List[int]) -> int:
