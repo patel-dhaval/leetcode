@@ -1,18 +1,68 @@
+'''
+Approach
+Two pointers to indicate start and end of the window, 
+Goal would be to start the window at the smallest value and end the window at the highest value, thus maximizing profits
+
+Edge cases:
+return 0
+
+L, R = 0, 1
+buyP = prices[L]
+sellP = prices[R]
+maxP = 0
+
+while R < len(prices):
+    if buyP > sellP:
+        L = R
+        buyP = nums[L]
+        R = R + 1
+        sellP= nums[R]
+    else:
+        profit = sellP - buyP
+        maxProfit = max(profit, maxProfit)
+        R += 1
+return maxProfit
+
+
+Dry Run:
+
+[7, 1, 5, 3]
+
+L , R = 0, 1
+
+buyP = 7
+SellP = 1
+
+L = 1
+R = 2
+buyP = 1
+SellP = 5
+
+profit = 2
+maxP = 4
+
+
+
+
+'''
 class Solution:
     def maxProfit(self, prices: List[int]) -> int:
-        l, r = 0, 1
-        maxProfit = 0
-        if len(prices) == 1:
+        
+        if len(prices) < 2:
             return 0
 
-        while r < len(prices):
-            if prices[l] < prices[r]:
-                profit = prices[r] - prices[l]     
-                if profit > maxProfit:
-                    maxProfit = profit
-                    print(maxProfit)
-            else:
-                l = r
+        L, R = 0, 1
+        buyP = prices[L]
+        maxP = 0
 
-            r+=1
-        return maxProfit
+        while R < len(prices):
+            sellP = prices[R]
+            if buyP > sellP:
+                L = R
+                buyP = prices[L]
+                R += 1
+            else:
+                profit = sellP - buyP
+                maxP = max(profit, maxP)
+                R += 1
+        return maxP
