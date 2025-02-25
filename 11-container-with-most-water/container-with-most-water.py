@@ -1,14 +1,24 @@
+'''
+Approach
+2 Pointers, calc volume - dist * min(heights1, heights2)
+if h1 < h2:
+    h1 +=1
+else:
+    h2 -= 1
+keep tracking max volume 
+break condiiton when h1 > h2
+
+'''
+
 class Solution:
     def maxArea(self, height: List[int]) -> int:
-        l, r = 0, len(height)-1
+        L, R = 0, len(height)-1
         maxVol = 0
-        while l < r:
-            vol = min(height[l], height[r]) * (r-l)
-            if vol > maxVol:
-                maxVol = vol
-            if height[l] < height[r]:
-                l += 1
+        while L < R:
+            vol = (R - L) * min(height[L], height[R])
+            maxVol = max(vol, maxVol)
+            if height[L] < height[R]:
+                L += 1
             else:
-                r -= 1
-        
+                R -= 1
         return maxVol
