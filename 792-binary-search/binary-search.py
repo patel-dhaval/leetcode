@@ -1,24 +1,14 @@
 class Solution:
     def search(self, nums: List[int], target: int) -> int:
-        
-        def binarySearch(arr, x, low, high):
-            if low > high:
-                return -1
-            
-            mid = (low + high)//2
+        L, R = 0, len(nums)-1
 
-            if x == arr[mid]:
-                return mid
-            elif x > arr[mid]:
-                return binarySearch(arr, x, mid + 1, high)
+        while L <= R:
+            mid = (L + R)// 2
+            if target > nums[mid]:
+                L = mid + 1
+            elif target < nums[mid]:
+                R = mid - 1
             else:
-                return binarySearch(arr, x, low, mid - 1)
-
-        if(len(nums)) == 1:
-            if nums[0] == target:
-                return 0
-            return -1
+                return mid
         
-        low, high = 0, len(nums)-1
-
-        return binarySearch(nums, target, low, high)
+        return -1
