@@ -17,8 +17,8 @@ Thus, considering this to be a contiguous array is feasible
 
 Start with 2 pointers, L and R, and calculate the midpoint of this.
 Now, to calculate the row and col of this particular midpoint is a challenge
-row would be modulus of the mid value and the rows
-col would be division of the mid value and the cols
+row would be division of the mid value and the cols, this it to find how many complete rows can be included in the midpoint
+col would be modulus of the mid value and the cols, this will find the exact place within the incomplete row where the element is
 Once the mid value is retreves, compare and check if the target is larger or smaller
 On the basis of that the pointer needs to be shifted and we keep doing this till either the value is found or L < R.
 
