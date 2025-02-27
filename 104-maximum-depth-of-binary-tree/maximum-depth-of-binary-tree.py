@@ -11,11 +11,11 @@ class Solution:
             if not node:
                 return 0
             
-            max_lh = 1 + dfs(node.left)
-            max_rh = 1 + dfs(node.right)
+            max_lh = dfs(node.left)
+            max_rh = dfs(node.right)
 
             depth = max(max_lh, max_rh)
             
-            return depth
+            return 1 + depth
         
         return dfs(root)
