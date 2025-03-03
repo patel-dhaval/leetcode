@@ -1,34 +1,23 @@
 class Solution:
     def canFinish(self, numCourses: int, prerequisites: List[List[int]]) -> bool:
-        visited = set()
+        indegree = [0] * numCourses
+        adj = [[] for i in range(numCourses)]
+        for src, dst in prerequisites:
+            indegree[dst] += 1
+            adj[src].append(dst)
 
-        adj_map = {i: [] for i in range(numCourses)}
-
-        for course in prerequisites:
-            if course[1] in adj_map:
-                adj_map[course[1]].append(course[0])
-            else:
-                adj_map[course[1]] = [course[0]]
-            if course[0] not in adj_map:
-                adj_map[course[0]] = []
-
-        def dfs(node):
-            if node in visited:
-                return False
-            if adj_map[node] == []:
-                return True
-
-            visited.add(node)
-            for neighbor in adj_map[node]:
-                if not dfs(neighbor): return False
-
-            visited.remove(node)
-            adj_map[node] = []
-            return True
-
+        q = deque()
+        for n in range(numCourses):
+            if indegree[n] == 0:
+                q.append(n)
         
-        for node in adj_map.keys():
-            if not dfs(node):
-                return False
-        
-        return True
+        finish = 0
+        while q:
+            node = q.popleft()
+            finish += 1
+            for nei in adj[node]:
+                indegree[nei] -= 1
+                if indegree[nei] == 0:
+                    q.append(nei)
+                
+        return finish == numCourses
