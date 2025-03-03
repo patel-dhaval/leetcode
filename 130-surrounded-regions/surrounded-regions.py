@@ -1,3 +1,4 @@
+import collections
 from typing import List
 
 class Solution:
@@ -5,35 +6,38 @@ class Solution:
         """
         Do not return anything, modify board in-place instead.
         """
+        if not board or not board[0]:
+            return
         
-        rows, cols = len(board), len(board[0])
-        visited = set()
-        directions = [[0, 1], [0, -1], [1, 0], [-1, 0]]
-        
-        def dfs(r, c):
-            # Use DFS to mark cells connected to the boundary as visited
-            if (r, c) in visited or board[r][c] != 'O':
-                return
-            visited.add((r, c))
-            for dr, dc in directions:
-                nr, nc = r + dr, c + dc
-                if 0 <= nr < rows and 0 <= nc < cols:
-                    dfs(nr, nc)
-        
-        # Mark all 'O's connected to the boundary as visited
-        for r in range(rows):
-            for c in [0, cols - 1]:  # left and right columns
-                if board[r][c] == 'O':
-                    dfs(r, c)
-        for c in range(cols):
-            for r in [0, rows - 1]:  # top and bottom rows
-                if board[r][c] == 'O':
-                    dfs(r, c)
-        
-        # Flip all 'O's that are not visited to 'X' and convert visited back to 'O'
-        for r in range(rows):
-            for c in range(cols):
-                if (r, c) not in visited and board[r][c] == 'O':
-                    board[r][c] = 'X'
-                elif (r, c) in visited:
-                    board[r][c] = 'O'
+        ROWS, COLS = len(board), len(board[0])
+        queue = collections.deque()
+
+        # Add all 'O's on the border to the queue
+        for r in range(ROWS):
+            if board[r][0] == "O":
+                queue.append((r, 0))
+            if board[r][COLS - 1] == "O":
+                queue.append((r, COLS - 1))
+
+        for c in range(COLS):
+            if board[0][c] == "O":
+                queue.append((0, c))
+            if board[ROWS - 1][c] == "O":
+                queue.append((ROWS - 1, c))
+
+        # BFS and mark connected 'O's as 'T' (temporary)
+        directions = [[1, 0], [-1, 0], [0, 1], [0, -1]]
+        while queue:
+            r, c = queue.popleft()
+            if 0 <= r < ROWS and 0 <= c < COLS and board[r][c] == "O":
+                board[r][c] = "T"  # Temporarily mark it
+                for dr, dc in directions:
+                    queue.append((r + dr, c + dc))
+
+        # Flip remaining 'O' to 'X', and 'T' back to 'O'
+        for r in range(ROWS):
+            for c in range(COLS):
+                if board[r][c] == "O":
+                    board[r][c] = "X"
+                elif board[r][c] == "T":
+                    board[r][c] = "O"
