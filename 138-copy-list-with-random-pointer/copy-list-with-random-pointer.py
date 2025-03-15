@@ -18,6 +18,8 @@ Second Pass, create the linkage, both random pointers and next pointer, on the b
 
 class Solution:
     def copyRandomList(self, head: 'Optional[Node]') -> 'Optional[Node]':
+        if not head:
+            return None
         old_to_new = {None:None}
         
         curr = head
