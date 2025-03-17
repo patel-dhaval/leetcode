@@ -10,31 +10,16 @@ class Node:
 
 class Solution:
     def lowestCommonAncestor(self, p: 'Node', q: 'Node') -> 'Node':
-        def find_root(node):
-            if node.parent == None:
-                return node
-            
-            return find_root(node.parent)
-        
-        root = find_root(p)
-        
-        def LCA(node):
-            curr = node
-            
-            if not curr:
-                return None
+        visited = set()
+        while p is not None or q is not None:
+            if p is not None:
+                if p.val in visited:
+                    return p
+                visited.add(p.val)
+                p = p.parent
 
-            if curr == p or curr == q:
-                return node
-            
-            left = LCA(curr.left)
-            right = LCA(curr.right)
-            
-            if left and right:
-                return curr
-            elif left:
-                return left
-            else:
-                return right
-        
-        return LCA(root)
+            if q is not None:
+                if q.val in visited:
+                    return q
+                visited.add(q.val)
+                q = q.parent
