@@ -18,14 +18,10 @@ class Solution:
             current_char = strs[0][i]
             for s in strs[1:]:
                 if current_char != s[i]:
-                    current_char = ""
-                    prefix = []    
-                                
-            if current_char != "":
-                prefix.append(current_char)
-                if len(prefix) > len(longest_prefix):
-                    longest_prefix = prefix
-            else:
-                break
+                    return ''.join(longest_prefix)    
+
+            prefix.append(current_char)
+            if len(prefix) > len(longest_prefix):
+                longest_prefix = prefix
         
         return ''.join(longest_prefix)
