@@ -1,10 +1,19 @@
-import sys
 class Solution:
-    def firstMissingPositive(self, nums: List[int]) -> int:
-        nums = set(nums)
-        max_int = int(sys.maxsize)
-        for i in range(1, max_int):
-            if i in nums:
+    def firstMissingPositive(self, nums: list[int]) -> int:
+        n = len(nums)
+        i = 0
+        while i < n:
+            if nums[i] <= 0 or nums[i] > n:
+                i += 1
                 continue
+                
+            index = nums[i] - 1
+            if nums[i] != nums[index]:
+                nums[i], nums[index] = nums[index], nums[i]
             else:
-                return i
+                i += 1
+        for i in range(n):
+            if nums[i] != i + 1:
+                return i + 1
+
+        return n + 1
