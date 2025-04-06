@@ -3,21 +3,17 @@ class Solution:
         """
         Do not return anything, modify nums in-place instead.
         """
-        # Calculate the effective rotation steps (to handle cases where k is    larger than the array length)
+
+        def reverse(l, r, nums):
+            while l < r:
+                nums[l], nums[r] = nums[r], nums[l]
+                l+=1
+                r-=1
+
         k = k % len(nums)
-        
-        # Reverse the entire array
-        # reverse(nums, 0, len(nums) - 1)
+
         nums.reverse()
         
-        # Reverse the first k elements
-        reverse(nums, 0, k - 1)
-        
-        # Reverse the remaining elements
-        reverse(nums, k, len(nums) - 1)
+        reverse(0, k-1, nums)
+        reverse(k, len(nums)-1, nums)
 
-def reverse(nums, start, end):
-        while start < end:
-            nums[start], nums[end] = nums[end], nums[start]
-            start += 1
-            end -= 1
