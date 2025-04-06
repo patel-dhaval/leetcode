@@ -16,4 +16,3 @@ class Solution:
         
         reverse(0, k-1, nums)
         reverse(k, len(nums)-1, nums)
-
