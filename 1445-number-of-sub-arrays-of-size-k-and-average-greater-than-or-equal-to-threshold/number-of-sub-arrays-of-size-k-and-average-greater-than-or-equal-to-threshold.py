@@ -12,6 +12,5 @@ class Solution:
                     max_subarrays += 1
                 temp_sum -= arr[l]
                 l += 1
-                
 
         return max_subarrays
