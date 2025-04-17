@@ -1,34 +1,44 @@
 class Solution:
     def evalRPN(self, tokens: List[str]) -> int:
         
-        if len(tokens) < 2:
-            return int(tokens[0])
-
-        stack = []
-        operationArr = ['+', '-', '*', '/']
-
-        stack.append(tokens[0])
-        stack.append(tokens[1])
-
-        for i in range(2, len(tokens)):
-            if tokens[i] in operationArr:
-                temp1 = stack.pop()
-                temp2 = stack.pop()
-                val = int(self.operation(temp2, temp1, tokens[i]))
-                print(val)
-                stack.append(val)
-            else:
-                stack.append(tokens[i])
+        def addition(num1, num2) -> int:
+            return int(num1) + int(num2)
         
-        return stack[-1]
+        def subtraction(num1, num2) -> int:
+            return int(num1) - int(num2)
+        
+        def multiply(num1, num2) -> int:
+            return int(num1) * int(num2)
+        
+        def divide(num1, num2) -> int:
+            if int(num2) == 0:
+                raise ValueError
+            return int(num1) / int(num2)
+        
+        val_stack = []
+        symbols = ['+', '-', '*', '/']
+        symbols = set(symbols)
 
-    def operation(self, val1, val2, opn):
-        if opn == '+':
-            return int(val1) + int(val2)
-        elif opn == '-':
-            return int(val1) - int(val2)
-        elif opn == '*':
-            return int(val1) * int(val2)
-        elif opn == '/':
-            return int(val1)/int(val2)
+        for v in tokens:
+            if v not in symbols:
+                val_stack.append(v)
+            else:
+                num2 = val_stack.pop()
+                num1 = val_stack.pop()
+
+                if v == '+':
+                    res = addition(num1, num2)
+                    val_stack.append(res)
+                elif v == '-':
+                    res = subtraction(num1, num2)
+                    val_stack.append(res)
+                elif v == '*':
+                    res = multiply(num1, num2)
+                    val_stack.append(res)
+                elif v == '/':
+                    res = divide(num1, num2)
+                    val_stack.append(res)
+        return int(val_stack[-1])
+
+        
         
