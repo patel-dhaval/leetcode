@@ -2,22 +2,23 @@ class Solution:
     def generateParenthesis(self, n: int) -> List[str]:
         openN, closeN = 0, 0
         res = []
-
-        def dfs(temp, openN, closeN):
+        val_stack = []
+        
+        def backtrack(openN, closeN):
             if openN == n and closeN == n:
-                res.append(temp)
+                res.append("".join(val_stack))
             
             if openN < n:
-                temp1 = temp + '('
-                dfs(temp1, openN+1, closeN)
+                val_stack.append('(')
+                backtrack(openN+1, closeN)
+                val_stack.pop()
             
             if closeN < openN:
-                temp1 = temp + ')'
-                dfs(temp1, openN, closeN+1)
-            
-            return temp
+                val_stack.append(')')
+                backtrack(openN, closeN+1)
+                val_stack.pop()
 
-        dfs('', 0, 0)
+        backtrack(0, 0)
 
         return res
 
