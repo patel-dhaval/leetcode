@@ -1,43 +1,22 @@
-"""
-Need to find: Min weight capacity of ship to ship in days mentioned
-Total Weight of the input needs to be loaded in days mentioned
-
-ip: [1,2,3,4,5]
-days: 2
-find: min weight of ship to ship all in 2 days and shipments in order.
-
-ip: [1,2,3,4,5]
-days: 2
-
-low: 1, 9, 9, 9, 9
-high: 15, 15, 11, 9, 8
-mid: 8, 12, 10, 9
-temp_sum: 1 + 2 + 3, 4, 5, 1 + 2 + 3 + 4, 5, 1 + 2 + 3 + 4, 5, 1 + 2 + 3, 4 + 5
-temp_days: 2
-lowest_capacity: 15, 12, 10, 9
-
-"""
 class Solution:
     def shipWithinDays(self, weights: List[int], days: int) -> int:
-        total_weight = sum(weights)
+        max_capacity = sum(weights)
         low = max(weights)
-        high = total_weight
-        lowest_capacity = total_weight
+        high = max_capacity
 
-        while low < high:
+        while low <= high:
             mid = (low + high)//2
-            temp_days = 1
-            temp_sum = 0
-            i = 0
-            for weight in weights:
-                if temp_sum + weight > mid:
-                    temp_days += 1
-                    temp_sum = 0
-                temp_sum += weight
-            if temp_days <= days:
-                lowest_capacity = min(lowest_capacity, mid)
-                high = mid
-            else:
+            sum_w = 0
+            day_t = 1
+            for w in weights:
+                if sum_w + w > mid:
+                    day_t += 1
+                    sum_w = 0
+                sum_w += w
+            if day_t > days:
                 low = mid + 1
+            else:
+                high = mid - 1
+                max_capacity = min(max_capacity, mid)
         
-        return lowest_capacity
+        return max_capacity
