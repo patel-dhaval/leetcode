@@ -1,13 +1,3 @@
-'''
-Approach
-
-1. Find the middle of the list as the plan would be to reverse the second half of the LL and merge the two halves
-2. Use Fast and Slow pointers to find the middle of the list, be careful for both even and odd length of LL
-3. Once the middle of the LL is found, we save the starting node for the second half of the LL
-4. Reverse the second half of the LL
-5. We iterate by moving from the head to the next pointer being the head node of the second half of the LL
-'''
-
 # Definition for singly-linked list.
 # class ListNode:
 #     def __init__(self, val=0, next=None):
@@ -18,31 +8,36 @@ class Solution:
         """
         Do not return anything, modify head in-place instead.
         """
-        
-        slow, fast = head, head.next
+
+        slow, fast = head, head
 
         while fast and fast.next:
             slow = slow.next
             fast = fast.next.next
 
-        
-        curr = slow.next
+        curr2 = slow.next
         slow.next = None
         prev = None
+        temp = None
 
-        while curr:
-            temp = curr.next
-            curr.next = prev
-            prev = curr
-            curr = temp
+        while curr2:
+            temp = curr2.next
+            curr2.next = prev
+            prev = curr2
+            curr2 = temp
 
         head1 = head
         head2 = prev
 
-        while head2:
-            temp = head1.next
-            temp2 = head2.next
+        while head1 and head2:
+            temp1, temp2 = head1.next, head2.next
             head1.next = head2
-            head2.next = temp
-            head1 = temp
+            head2.next = temp1
+            head1 = temp1
             head2 = temp2
+
+        return head
+
+
+
+        
