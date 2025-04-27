@@ -10,12 +10,12 @@ class Solution:
         def dfs(node):
             if not node:
                 return 0
-            
-            max_lh = dfs(node.left)
-            max_rh = dfs(node.right)
 
-            depth = max(max_lh, max_rh)
-            
-            return 1 + depth
+            lh = dfs(node.left)
+            rh = dfs(node.right)
+
+            return 1 + max(lh, rh)
         
         return dfs(root)
+
+    
