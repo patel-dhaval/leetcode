@@ -21,7 +21,7 @@ class Solution:
 
         directions = [[1,0], [-1, 0], [0, 1], [0, -1]]
         time = 0
-        while queue and fresh > 0:
+        while queue:
             for _ in range(len(queue)):
                 r, c = queue.popleft()
                 visit.add((r,c))
@@ -34,7 +34,6 @@ class Solution:
                         fresh -= 1
             time += 1
 
-        if fresh == 0:
-            return time
-        else:
-            return -1
+            if fresh == 0:
+                return time
+        return -1
