@@ -10,7 +10,8 @@ class Solution:
             if len(max_heap) > k:
                 heapq.heappop(max_heap)
         
-        for v in max_heap:
+        while max_heap:
+            v = heapq.heappop(max_heap)
             res.append(v[1])
 
         return res
