@@ -1,22 +1,24 @@
 class Solution:
     def combinationSum2(self, candidates: List[int], target: int) -> List[List[int]]:
-        res = []
-        combinations = []
         candidates.sort()
-        def combinationGenerator(index, current_sum):
-            if current_sum == target:
-                res.append(combinations.copy())
+        combs = []
+        def helper(index, currComb, curr_sum):
+            if curr_sum > target:
                 return
             
-            if current_sum > target:
+            if curr_sum == target:
+                combs.append(currComb.copy())
                 return
-            processed_ip = set()
+
+            prev = -1
             for i in range(index, len(candidates)):
-                if candidates[i] not in processed_ip:
-                    processed_ip.add(candidates[i])
-                    combinations.append(candidates[i])
-                    combinationGenerator(i+1, current_sum + candidates[i])
-                    combinations.pop()
+                if candidates[i] != prev: 
+                    currComb.append(candidates[i])
+                    helper(i+1, currComb, curr_sum + candidates[i])
+                    currComb.pop()
+                    prev = candidates[i]
+            return
         
-        combinationGenerator(0, 0)
-        return res
+        helper(0, [], 0)
+
+        return combs
