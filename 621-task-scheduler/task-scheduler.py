@@ -17,7 +17,7 @@ class Solution:
                 v, k, time_passed = heapq.heappop(max_heap)
                 v = abs(v)
                 v -= 1
-                if v != 0:
+                if v:
                     temp.append([-v, k, time+n])
 
             if temp and temp[0][2] == time:
