@@ -1,18 +1,17 @@
 class Solution:
     def combine(self, n: int, k: int) -> List[List[int]]:
         res = []
-        subset = []
-
-        def combinationGenerator(curr_number, subset):
-            if len(subset) == k:
-                res.append(subset.copy())
-
-            if curr_number <= n:
-                for i in range(curr_number, n+1):
-                    subset.append(i)
-                    combinationGenerator(i+1, subset)
-                    subset.pop()
+        def helper(index, currComb):
+            if len(currComb) > k:
+                return
+            
+            if len(currComb) == k:
+                res.append(currComb.copy())
                 
-        combinationGenerator(1, [])
-
+            for i in range(index, n+1):
+                currComb.append(i)
+                helper(i+1, currComb)
+                currComb.pop()
+        
+        helper(1, [])
         return res
