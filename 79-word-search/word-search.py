@@ -2,9 +2,6 @@ class Solution:
     def exist(self, board: List[List[str]], word: str) -> bool:
         ROWS = len(board)
         COLS = len(board[0])
-        visit = set()
-        
-        word_list = list(word)
         def word_seach(r, c, idx):
             if (r,c) in visit:
                 return False
