@@ -1,51 +1,38 @@
-# class Solution:
-#     def letterCombinations(self, digits: str) -> List[str]:
-#         mapping = {2: 'abc',3: 'def', 4: 'ghi', 5: 'jkl', 6: 'mno', 7: 'pqrs', 8: 'tuv', 9: 'wxyz'}
-#         res = []
-#         letter_combinations = []
-
-#         def combinationGenerator(index, letter_combinations):
-#             if len(letter_combinations) == len(digits):
-#                 temp_copy = letter_combinations.copy()
-#                 local_res = ''.join(temp_copy)
-#                 res.append(local_res)
-#                 return
-            
-#             for i in range(index, len(digits)):
-#                 char = mapping[int(digits[index])]
-#                 for c in char: 
-#                     letter_combinations.append(c)
-#                     combinationGenerator(i+1, letter_combinations)
-#                     letter_combinations.pop()
-            
-#         if len(digits) < 1:
-#             return []
-
-#         combinationGenerator(0, [])
-
-#         return res
-
-
 class Solution:
     def letterCombinations(self, digits: str) -> List[str]:
-        if not digits:  # Handle empty input early
-            return []
-
-        # Store mapping with string keys
-        mapping = {'2': 'abc', '3': 'def', '4': 'ghi', '5': 'jkl', 
-                   '6': 'mno', '7': 'pqrs', '8': 'tuv', '9': 'wxyz'}
-        
+        num_letter_map = {
+            '1': None,
+            '2': ['a', 'b', 'c'],
+            '3': ['d', 'e', 'f'],
+            '4': ['g', 'h', 'i'],
+            '5': ['j', 'k', 'l'],
+            '6': ['m', 'n', 'o'],
+            '7': ['p', 'q', 'r', 's'],
+            '8': ['t', 'u', 'v'],
+            '9': ['w','x', 'y', 'z'],
+            '0': None
+        }
         res = []
-
-        def combinationGenerator(index, letter_combinations):
-            if index == len(digits):  # Base case: fully processed digits
-                res.append(''.join(letter_combinations))
+        def helper(index, currComb):
+            print(currComb, res)
+            
+            if index > len(digits):
                 return
 
-            for c in mapping[digits[index]]:
-                letter_combinations.append(c)
-                combinationGenerator(index + 1, letter_combinations)  # Move to the next digit
-                letter_combinations.pop()  # Backtrack
+            if index == len(digits) and len(currComb) == len(digits):
+                res.append(''.join(currComb.copy()))
+                return
+            
+            for i in range(index, len(digits)):
+                vals = num_letter_map.get(digits[i])
+                for v in vals:
+                    currComb.append(v)
+                    helper(i+1, currComb)
+                    currComb.pop()
+            
+        
+        helper(0, [])
+        
+        return res if res != [""] else []
 
-        combinationGenerator(0, [])
-        return res
+            
