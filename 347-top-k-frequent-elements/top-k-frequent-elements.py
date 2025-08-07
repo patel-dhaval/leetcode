@@ -1,39 +1,36 @@
+"""
+Approach 1:
+freq_arr size n+1
+Sort array
+for each unique element, find the count
+index representing the count, append the value as a list
+
+Parse freq_arr from desc, find values, decrement k, when k == 0, return res
+
+TC: O(nlog n) -> sorting
+SC: O(n)
+
+"""
 class Solution:
     def topKFrequent(self, nums: List[int], k: int) -> List[int]:
-        
-        # O(n)
-
-        count = {}
-        freq = [[] for i in range(len(nums) + 1)]
-
-        for n in nums:
-            count[n] = 1 + count.get(n, 0)
-        for n, c in count.items():
-            freq[c].append(n)
-
+        if len(nums) == 1:
+            return nums
+        freq_arr = [[] for _ in range(len(nums) + 1) ]
+        nums.sort()
+        cnt = 1
         res = []
-        for i in range(len(freq) - 1, 0, -1):
-            for n in freq[i]:
-                res.append(n)
-                if len(res) == k:
-                    return res
-
-        # O(nlogn)
-
-        # hmap = {}
-        # op = []
-
-        # for i in range(0, len(nums)):
-        #     count = 0
-        #     if nums[i] not in hmap.keys():
-        #         hmap[nums[i]] = count + 1
-        #     else:
-        #         count = hmap[nums[i]]
-        #         hmap[nums[i]] = count + 1
-
-        # key = sorted(hmap, key=hmap.get, reverse=True)
-
-        # for x in range(0, k):
-        #     op.append(key[x])
-
-        # return op
+        for i in range(1, len(nums)):
+            if nums[i] == nums[i-1]:
+                cnt += 1
+            else:
+                freq_arr[cnt].append(nums[i-1])
+                cnt = 1
+        freq_arr[cnt].append(nums[i])
+        
+        for num in freq_arr[::-1]:
+            if num:
+                for j in num:
+                    res.append(j)
+                    k-= 1
+                    if k == 0:
+                        return res
