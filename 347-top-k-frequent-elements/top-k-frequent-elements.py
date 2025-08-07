@@ -15,7 +15,7 @@ class Solution:
     def topKFrequent(self, nums: List[int], k: int) -> List[int]:
         if len(nums) == 1:
             return nums
-        freq_arr = [[] for _ in range(len(nums) + 1) ]
+        freq_arr = [[] for _ in range(len(nums) + 1)]
         nums.sort()
         cnt = 1
         res = []
@@ -25,7 +25,7 @@ class Solution:
             else:
                 freq_arr[cnt].append(nums[i-1])
                 cnt = 1
-        freq_arr[cnt].append(nums[i])
+        freq_arr[cnt].append(nums[-1])
         
         for num in freq_arr[::-1]:
             if num:
