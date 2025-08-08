@@ -1,18 +1,24 @@
+"""
+Approach:
+use two pointer
+use helper functions to identify alphanumeric
+use string functions to convert to lowercase and compare
+if l > r and no mismatch, return True, else return False
+"""
 class Solution:
     def isPalindrome(self, s: str) -> bool:
-        l, r = 0, len(s) - 1
+        L, R = 0, len(s)-1
 
-        while l < r:
-            while l < r and not self.alphaNum(s[l]):
-                l += 1
-            while r > l and not self.alphaNum(s[r]):
-                r -= 1
-            if s[l].lower() != s[r].lower():
-                return False
-            l, r = l + 1, r - 1
+        while L < R:
+            if s[L].isalnum() and s[R].isalnum():
+                if s[L].lower() == s[R].lower():
+                    L += 1
+                    R -=1
+                    continue
+                else:
+                    return False
+            elif not s[L].isalnum():
+                L +=1
+            elif not s[R].isalnum():
+                R -= 1
         return True
-    
-    def alphaNum(self, c):
-        return (ord('A') <= ord(c) <= ord('Z') or 
-                ord('a') <= ord(c) <= ord('z') or 
-                ord('0') <= ord(c) <= ord('9'))
