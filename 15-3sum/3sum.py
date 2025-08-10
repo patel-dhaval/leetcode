@@ -21,8 +21,6 @@ class Solution:
                     k -= 1
                     while nums[j] == nums[j-1] and j < k:
                         j+=1
-                    while nums[k] == nums[k+1] and j < k:
-                        k-=1
             i += 1
             while i in range(len(nums)) and nums[i] == nums[i-1]:
                 i += 1
