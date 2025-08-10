@@ -1,6 +1,6 @@
 class Solution:
     def maxProfit(self, prices: List[int]) -> int:
-        max_profit = float("-inf")
+        max_profit = 0
         if len(prices) < 2:
             return 0
         
@@ -13,4 +13,4 @@ class Solution:
                 max_profit = max(max_profit, prices[R] - prices[L])
             R+=1
             
-        return max_profit if max_profit != float("-inf") else 0
+        return max_profit
