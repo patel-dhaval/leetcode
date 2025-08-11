@@ -5,13 +5,10 @@ class Solution:
         char_dict = {}
 
         for R in range(len(s)):
-            char_dict[s[R]] = char_dict.get(s[R], 0) + 1
-            if (R-L+1 - max(char_dict.values())) <= k:
-                max_len = max(max_len, R - L + 1)
-            
-            else:
-                while (R-L+1 - max(char_dict.values())) > k:
+            char_dict[s[R]] = char_dict.get(s[R], 0) + 1            
+            while (R-L+1 - max(char_dict.values())) > k:
                     char_dict[s[L]] -= 1
                     L += 1
-        
+            max_len = max(max_len, R - L + 1)
+
         return max_len
