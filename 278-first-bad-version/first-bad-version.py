@@ -3,14 +3,18 @@
 
 class Solution:
     def firstBadVersion(self, n: int) -> int:        
-        L = 1
-        R = n
+        """
+        Uses binary search to find the first bad version.
+        Time Complexity: O(log n)
+        Space Complexity: O(1)
+        """
+        left, right = 1, n
 
-        while L < R:
-            mid = (L + R)//2
-
+        while left < right:
+            mid = left + (right - left) // 2  # Prevents overflow in some languages
             if isBadVersion(mid):
-                R = mid
+                right = mid  # First bad version is at or before mid
             else:
-                L = mid + 1
-        return L
+                left = mid + 1  # First bad version is after mid
+
+        return left
