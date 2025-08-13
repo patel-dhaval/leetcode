@@ -1,32 +1,26 @@
 class Solution:
     def findMin(self, nums: List[int]) -> int:
-        l = 0
-        r = len(nums) - 1
-        curr_min = float("inf")
-        while l <= r:
-            m = (l + r) // 2
-            curr_min = min(curr_min, nums[m])
-            if nums[m] < nums[r]:
-                r = m - 1
+        """
+        Approach: Use Binary sesarch to identify which half the min would be located
+        This will be done by comparing the middle element with left and right most element.
+        If the middle is greater than the left element, there is still no clarity if its in first or second half, so we compare with right as well, and if the mid is smaller then the right element, that means its in the first half, else second half.
+        Similarly, if the element is smaller than the left element, we still need to further check with the right element, if the mid is greater right element then its in the second half, else its first half
+        """
+
+        left, right = 0, len(nums) - 1
+
+        while left < right:
+            mid = (left + right)//2
+            if nums[mid] > nums[left]:
+                if nums[mid] > nums[right]:
+                    left = mid + 1
+                else:
+                    right = mid
             else:
-                l = m + 1
-        
-        return curr_min
+                if nums[mid] < nums[right]:
+                    right = mid
+                else:
+                    left = mid + 1
+        return nums[left] 
 
-
-        # L , R = 0, len(nums) - 1 
-        # curr_min = float("inf")
         
-        # while L  <  R :
-        #     mid = L + (R - L ) // 2
-        #     curr_min = min(curr_min,nums[mid])
-            
-        #     # right has the min 
-        #     if nums[mid] > nums[R]:
-        #         L = mid + 1
-                
-        #     # left has the  min 
-        #     else:
-        #         R = mid - 1 
-                
-        # return min(curr_min,nums[L])
