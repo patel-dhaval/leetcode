@@ -12,8 +12,8 @@ class Solution:
             else:
                 target_vals[tuple(freq_arr)] = [ip]
         
-        # for v in target_vals.values():
-        #     res.append(v)
+        for v in target_vals.values():
+            res.append(v)
 
-        # return res
-        return list(target_vals.values())
+        return res
+        #return list(target_vals.values())
