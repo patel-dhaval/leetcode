@@ -1,12 +1,11 @@
 class Solution:
     def twoSum(self, numbers: List[int], target: int) -> List[int]:
-        i, j = 0, len(numbers) -1
+        L, R = 0 , len(numbers)-1
 
-        while i < j:
-            sum_nos = numbers[i] + numbers[j]
-            if target > sum_nos:
-                i += 1
-            elif target < sum_nos:
-                j-=1
+        while L < len(numbers) and R < len(numbers):
+            if (numbers[L] + numbers[R]) == target:
+                return [L+1 , R+1]
+            elif (numbers[L] + numbers[R]) < target:
+                L += 1
             else:
-                return [i+1, j+1]
+                R -= 1
