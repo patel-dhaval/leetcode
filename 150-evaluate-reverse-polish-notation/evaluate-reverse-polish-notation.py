@@ -1,44 +1,27 @@
 class Solution:
     def evalRPN(self, tokens: List[str]) -> int:
-        
-        def addition(num1, num2) -> int:
-            return int(num1) + int(num2)
-        
-        def subtraction(num1, num2) -> int:
-            return int(num1) - int(num2)
-        
-        def multiply(num1, num2) -> int:
-            return int(num1) * int(num2)
-        
-        def divide(num1, num2) -> int:
-            if int(num2) == 0:
-                raise ValueError
-            return int(num1) / int(num2)
-        
+        if len(tokens) < 2:
+            return int(tokens[0])
+
         val_stack = []
-        symbols = ['+', '-', '*', '/']
-        symbols = set(symbols)
-
-        for v in tokens:
-            if v not in symbols:
-                val_stack.append(v)
+        operators = ["+", "-", "/", "*"]
+        for c in tokens:
+            if c not in operators:
+                val_stack.append(c)
             else:
-                num2 = val_stack.pop()
-                num1 = val_stack.pop()
+                val1 = val_stack.pop()
+                val2 = val_stack.pop()
+                if c == "+":
+                    temp_val = int(val2) + int(val1)
+                elif c == "-":
+                    temp_val = int(val2) - int(val1)
+                elif c == '*':
+                    temp_val = int(val2) * int(val1)
+                elif c == '/':
+                    temp_val = (int(val2)/int(val1))
+                val_stack.append(int(temp_val))
+        soln = 0
 
-                if v == '+':
-                    res = addition(num1, num2)
-                    val_stack.append(res)
-                elif v == '-':
-                    res = subtraction(num1, num2)
-                    val_stack.append(res)
-                elif v == '*':
-                    res = multiply(num1, num2)
-                    val_stack.append(res)
-                elif v == '/':
-                    res = divide(num1, num2)
-                    val_stack.append(res)
-        return int(val_stack[-1])
-
-        
-        
+        for val in val_stack:
+            soln += val
+        return soln
