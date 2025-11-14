@@ -3,14 +3,8 @@ class Solution:
         L, R = 0, len(nums) - 1
         while L < R:
             mid = (L+R)//2
-            if nums[mid] > nums[L]:
-                if nums[mid] > nums[R]:
-                    L = mid + 1
-                else:
-                    R = mid
+            if nums[mid] > nums[R]:
+                L = mid + 1
             else:
-                if nums[mid] < nums[R]:
-                    R = mid
-                else:
-                    L = mid + 1
+                R = mid
         return nums[L]
