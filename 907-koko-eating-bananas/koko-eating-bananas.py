@@ -12,7 +12,6 @@ class Solution:
             if hours > h:
                 low = mid +1
             else:
-                min_rate = min(mid, min_rate)
                 high = mid
-
+                min_rate = min(high, min_rate)
         return min_rate
