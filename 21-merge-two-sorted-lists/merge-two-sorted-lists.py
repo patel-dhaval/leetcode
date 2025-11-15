@@ -7,25 +7,15 @@ class Solution:
     def mergeTwoLists(self, list1: Optional[ListNode], list2: Optional[ListNode]) -> Optional[ListNode]:
         curr = ListNode()
         res = curr
-        head1 = list1
-        head2 = list2
-        while head1 and head2:
-            if head1.val < head2.val:
-                curr.next = head1
-                head1 = head1.next
+        while list1 and list2:
+            if list1.val < list2.val:
+                curr.next = list1
+                list1 = list1.next
             else:
-                curr.next = head2
-                head2 = head2.next
+                curr.next = list2
+                list2 = list2.next
             curr = curr.next
         
-        while head1:
-            curr.next = head1
-            head1 = head1.next
-            curr = curr.next
-
-        while head2:
-            curr.next = head2
-            head2 = head2.next
-            curr = curr.next
+        curr.next = list1 or list2
         
         return res.next
