@@ -6,35 +6,34 @@
 #         self.right = right
 class Solution:
     def isSubtree(self, root: Optional[TreeNode], subRoot: Optional[TreeNode]) -> bool:
-    
-        def isSameTree(node1, node2) -> bool:
+        
+        def dfs(node1, node2) -> bool:
             if not node1 and not node2:
                 return True
-            if not node1 or not node2:
+
+            if (not node1 or not node2):
                 return False
             if node1.val != node2.val:
                 return False
-            return isSameTree(node1.left, node2.left) and isSameTree(node1.right, node2.right)
-
+            if node1 and node2 and node1.val == node2.val:
+                left = dfs(node1.left, node2.left)
+                right = dfs(node1.right, node2.right)
+                return left and right
+        
         if not subRoot:
             return True 
         if not root:
             return False
-
-        stack = [root]
-
-        while stack:
-            curr = stack.pop()
-            if not curr:
-                continue
-
-            if curr.val == subRoot.val:
-                if isSameTree(curr, subRoot):
+        
+        queue = collections.deque()
+        queue.append(root)
+        while queue:
+            node = queue.popleft()
+            if node.val == subRoot.val and dfs(node, subRoot):
                     return True
-            
-            if curr.left:
-                stack.append(curr.left)
-            if curr.right:
-                stack.append(curr.right)
-
+            if node.left:
+                queue.append(node.left)
+            if node.right:
+                queue.append(node.right)
+        
         return False
