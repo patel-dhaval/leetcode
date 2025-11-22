@@ -12,11 +12,10 @@ class Solution:
 
             if not left < root.val < right:
                 return False
-            
-            if left < root.val < right:
-                left = dfs(left, root.left, root.val)
-                right = dfs(root.val, root.right, right)
-            
+        
+            left = dfs(left, root.left, root.val)
+            right = dfs(root.val, root.right, right)
+        
             return left and right
 
         return dfs(float('-inf'), root, float('inf'))
