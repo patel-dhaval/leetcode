@@ -6,24 +6,17 @@
 #         self.right = right
 class Solution:
     def isValidBST(self, root: Optional[TreeNode]) -> bool:
-        def dfs(left, node, right):
-            curr = node
-
-            if not curr:
+        def dfs(left, root, right):
+            if not root:
                 return True
-            
-            # Induction to check if val within range
-            # If true, continue recursion, else return false
-            # If either of the branch returns a false, terminate traversal and return False
 
-            if left < curr.val < right:
-                return dfs(left, curr.left, curr.val) and dfs(curr.val, curr.right, right)
-            else:
+            if not left < root.val < right:
                 return False
-        
-        left = float("-inf")
-        right = float("inf")
-
-        return dfs(left, root, right)
-
             
+            if left < root.val < right:
+                left = dfs(left, root.left, root.val)
+                right = dfs(root.val, root.right, right)
+            
+            return left and right
+
+        return dfs(float('-inf'), root, float('inf'))
