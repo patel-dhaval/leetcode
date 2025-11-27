@@ -1,19 +1,20 @@
 class Solution:
     def combinationSum(self, candidates: List[int], target: int) -> List[List[int]]:
-        def helper(index, currComb, combs):
-            if sum(currComb) > target:
-                return
-            
-            if sum(currComb) == target:
-                combs.append(currComb.copy())
+        res = []
+
+        def generateCombinations(i, combination):
+            if i >= len(candidates) or sum(combination) > target:
                 return
 
+            if sum(combination) == target:
+                res.append(combination.copy())
+                return
             
-            for i in range(index, len(candidates)):
-                currComb.append(candidates[i])
-                helper(i, currComb, combs)
-                currComb.pop()
-            
-            return combs
-        
-        return helper(0, [], [])
+            combination.append(candidates[i])
+            generateCombinations(i, combination)
+            combination.pop()
+            generateCombinations(i+1, combination)
+
+        generateCombinations(0, [])
+
+        return res
