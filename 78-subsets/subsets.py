@@ -1,25 +1,17 @@
 class Solution:
     def subsets(self, nums: List[int]) -> List[List[int]]:
-        
-        def subsets(index, currSet, res):
-            
-            if index > len(nums):
+        res = []
+
+        def generateSubsets(i, subset):
+            if i >= len(nums):
+                res.append(subset.copy())
                 return
-
-            res.append(currSet.copy())
             
-            for i in range(index, len(nums)):
-                currSet.append(nums[i])
-                subsets(i+1, currSet, res)
-                currSet.pop()
-            
-            return res
-        
-        return subsets(0, [], [])
+            subset.append(nums[i])
+            generateSubsets(i+1, subset)
+            subset.pop()
+            generateSubsets(i+1, subset)
 
-        
-        
+        generateSubsets(0, [])
 
-
-
-            
+        return res
