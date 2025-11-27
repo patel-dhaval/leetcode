@@ -3,14 +3,17 @@ class Solution:
         nums.sort()
         res = []
         def backtrack(i, subset):
-            res.append(subset[::])
+            if i == len(nums):
+                res.append(subset[::])
+                return
 
-            for j in range(i, len(nums)):
-                if j > i and nums[j] == nums[j - 1]:
-                    continue
-                subset.append(nums[j])
-                backtrack(j + 1, subset)
-                subset.pop()
+            subset.append(nums[i])
+            backtrack(i + 1, subset)
+            subset.pop()
+
+            while i + 1 < len(nums) and nums[i] == nums[i + 1]:
+                i += 1
+            backtrack(i + 1, subset)
 
         backtrack(0, [])
         return res
