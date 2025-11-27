@@ -1,17 +1,14 @@
 class Solution:
     def subsets(self, nums: List[int]) -> List[List[int]]:
+        nums.sort()
         res = []
+        def backtrack(i, subset):
+            res.append(subset[::])
 
-        def generateSubsets(i, subset):
-            if i >= len(nums):
-                res.append(subset.copy())
-                return
-            
-            subset.append(nums[i])
-            generateSubsets(i+1, subset)
-            subset.pop()
-            generateSubsets(i+1, subset)
+            for j in range(i, len(nums)):
+                subset.append(nums[j])
+                backtrack(j + 1, subset)
+                subset.pop()
 
-        generateSubsets(0, [])
-
+        backtrack(0, [])
         return res
