@@ -1,25 +1,16 @@
-from typing import List
-
 class Solution:
     def subsetsWithDup(self, nums: List[int]) -> List[List[int]]:
+        nums.sort()
         res = []
-        subset = []
+        def backtrack(i, subset):
+            res.append(subset[::])
 
-        nums.sort()  # Sort the input to handle duplicates
-
-        def dfs(index):
-            res.append(subset.copy())
-            seen = set()  # Local set to track duplicates at this level
-
-            for i in range(index, len(nums)):
-                # Skip if nums[i] has already been considered at this level
-                if nums[i] in seen:
+            for j in range(i, len(nums)):
+                if j > i and nums[j] == nums[j - 1]:
                     continue
-                
-                seen.add(nums[i])  # Mark nums[i] as seen
-                subset.append(nums[i])
-                dfs(i + 1)  # Recurse to build further subsets
-                subset.pop()  # Backtrack
+                subset.append(nums[j])
+                backtrack(j + 1, subset)
+                subset.pop()
 
-        dfs(0)
+        backtrack(0, [])
         return res
