@@ -1,33 +1,29 @@
 class Solution:
     def findOrder(self, numCourses: int, prerequisites: List[List[int]]) -> List[int]:
-        adjList = {i: [] for i in range(numCourses)}
-        for src, dst in prerequisites:
-            adjList[src].append(dst)
-
-        visit = set()
-        path_visit = set()
+        indegree = [0] * numCourses
+        adj_lst = {i: [] for i in range(numCourses) }
+        queue = collections.deque()
         toposort = []
+        visited = set()
+        for src, dst in prerequisites:
+            adj_lst[src].append(dst)
+            indegree[dst] += 1
+        
+        for i in range(numCourses):
+            if indegree[i] == 0:
+                queue.append(i)
 
-        def dfs(node):
-            if node in path_visit:
-                return False
-
-            if node in visit:
-                return True
-
-            path_visit.add(node)
-
-            for neighbor in adjList[node]:
-                if not dfs(neighbor):
-                    return False
-
-            path_visit.remove(node)
-            visit.add(node)
+        while queue:
+            node = queue.popleft()
+            visited.add(node)
+            for nei in adj_lst[node]:
+                indegree[nei] -= 1
+                if indegree[nei] == 0:
+                    queue.append(nei)
+        
             toposort.append(node)
-            return True
-
-        for course in range(numCourses):
-            if not dfs(course):
-                return []
-
-        return toposort
+        
+        if len(toposort) != numCourses:
+            return []
+        
+        return toposort[::-1]
