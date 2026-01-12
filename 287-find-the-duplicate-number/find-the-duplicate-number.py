@@ -3,16 +3,16 @@ class Solution:
         slow, fast = nums[0], nums[0]
 
         while fast:
-            fast = nums[nums[fast]]
             slow = nums[slow]
+            fast = nums[nums[fast]]
 
             if slow == fast:
                 break
+            
+        fast = nums[0]
 
-        slow2 = nums[0]
-
-        while slow2 != slow:
-            slow2 = nums[slow2]
+        while slow != fast:
             slow = nums[slow]
-        
+            fast = nums[fast]
+
         return slow
