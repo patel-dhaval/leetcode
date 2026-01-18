@@ -1,51 +1,48 @@
 class Solution:
     def pacificAtlantic(self, heights: List[List[int]]) -> List[List[int]]:
-            visited_atl = set()
-            visited_pac = set()
-            ROWS = len(heights)
-            COLS = len(heights[0])
-            res = []
-            def dfs_atl(r,c, visited_atl):            
-                visited_atl.add((r,c))
-                neighbours = [[0, 1], [0,-1], [1, 0], [-1, 0]]
+        ROWS = len(heights)
+        COLS = len(heights[0])
+        res = []
 
-                for dr, dc in neighbours:
-                    row = r+dr
-                    col = c + dc
-                    if min(row, col) < 0 or row == ROWS or col == COLS or heights[row][col] < heights[r][c]  or (row, col) in visited_atl:
-                        continue
+        visited_atl = set()
+        visited_pac = set()
 
-                    dfs_atl(row, col, visited_atl)
-                
+        def dfs(r, c, visited):
+            if (r, c) in visited:
                 return
             
-            def dfs_pac(r,c, visited_pac):            
-                visited_pac.add((r,c))
-                neighbours = [[0, 1], [0,-1], [1, 0], [-1, 0]]
+            visited.add((r,c))
 
-                for dr, dc in neighbours:
-                    row = r+dr
-                    col = c + dc
-                    if min(row, col) < 0 or row == ROWS or col == COLS or heights[row][col] < heights[r][c]  or (row, col) in visited_pac:
-                        continue
+            neighbours= [[1,0], [-1,0],[0,1],[0, -1]]
 
-                    dfs_pac(row, col, visited_pac)
-                
-                return
+            for dr, dc in neighbours:
+                row = r + dr
+                col = c + dc
 
-            for c in range(0, COLS):
-                dfs_pac(0, c, visited_pac)
-                dfs_atl(ROWS-1, c, visited_atl)
+                if min(row, col) < 0 or row == ROWS or col == COLS or heights[r][c] > heights[row][col]:
+                    continue
+                dfs(row, col, visited)
+        
+
+        for r in [0]:
+            for c in range(COLS):
+                dfs(r, c, visited_pac)
             
-            for r in range(0, ROWS):
-                dfs_pac(r, 0, visited_pac)
-                dfs_atl(r, COLS-1, visited_atl)
-            
-            print(visited_atl)
-            print(visited_pac)
-            for r in range(ROWS):
-                for c in range(COLS):
-                    if (r, c) in visited_atl and (r, c) in visited_pac:
-                        res.append([r,c])
-            
-            return res        
+        for r in [ROWS - 1]:
+            for c in range(COLS):
+                dfs(r, c, visited_atl)
+        
+        for r in range(ROWS):
+            for c in [0]:
+                dfs(r, c, visited_pac)
+        
+        for r in range(ROWS):
+            for c in [COLS - 1]:
+                dfs(r, c, visited_atl)
+
+        for r in range(ROWS):
+            for c in range(COLS):
+                if (r,c ) in visited_atl and (r,c ) in visited_pac:
+                    res.append([r,c])
+        
+        return res
