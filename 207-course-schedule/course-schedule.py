@@ -1,32 +1,40 @@
 class Solution:
     def canFinish(self, numCourses: int, prerequisites: List[List[int]]) -> bool:
-        adj_lst = [[] for _ in range(numCourses)]
-        
+        adj_list = {}
+
         for src, dst in prerequisites:
-            adj_lst[src].append(dst)
-            
-        print(adj_lst)
-        toposort = []
-        visited = set()
+            if src in adj_list:
+                adj_list[src].append(dst)
+            else:
+                adj_list[src] = [dst]
+            if dst not in adj_list:
+                adj_list[dst] = []
+        
         path = set()
+        visited = set()
+
         def dfs(node):
+            
             if node in path:
                 return False
 
             if node in visited:
                 return True
-            visited.add(node)
+            
             path.add(node)
-            for neighbour in adj_lst[node]:
+
+            for neighbour in adj_list[node]:
                 if not dfs(neighbour):
                     return False
-
+            
             path.remove(node)
-            toposort.append(node)
+
+            visited.add(node)
+
             return True
-        
-        for n in range(0, numCourses):
-            if not dfs(n):
+
+        for i in adj_list.keys():
+            if not dfs(i):
                 return False
-        
+
         return True
