@@ -34,6 +34,7 @@ class Solution:
             # If the value is the same as root, the second min might be deeper in this branch
             if node.left:
                 queue.append(node.left)
+            if node.right:
                 queue.append(node.right)
                 
         return second_min if found_second else -1
