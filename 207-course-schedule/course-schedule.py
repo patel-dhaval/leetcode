@@ -15,14 +15,14 @@ class Solution:
                 return False
 
             path.add(node)
-        
+            visited.add(node)
             for neighbour in adj_list[node]:
                 if dfs(neighbour):
                     return True
                 
             path.remove(node)
             
-            visited.add(node)
+
 
             return False
 
