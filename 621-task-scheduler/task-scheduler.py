@@ -10,20 +10,19 @@ class Solution:
         task_count = dict(Counter(tasks))
 
         for k, v in task_count.items():
-            heapq.heappush(max_heap, [-v, k])
+            heapq.heappush(max_heap, -v)
 
         while max_heap or queue:
             time += 1
             
             if max_heap:
-                count, char = heapq.heappop(max_heap)
-                updated_count = count
-                updated_count += 1
+                count = heapq.heappop(max_heap)
+                updated_count = count + 1
                 if updated_count < 0:
-                    queue.append([updated_count,char,time + n])
+                    queue.append([updated_count, time + n])
 
-            if queue and queue[0][2] == time:
+            if queue and queue[0][1] == time:
                 ready_task = queue.popleft() 
-                heapq.heappush(max_heap, [ready_task[0],ready_task[1]])
+                heapq.heappush(max_heap, ready_task[0])
         
         return time
