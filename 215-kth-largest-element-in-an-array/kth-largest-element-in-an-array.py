@@ -10,4 +10,3 @@ class Solution:
             k-= 1
 
         return -max_heap[0]
-
