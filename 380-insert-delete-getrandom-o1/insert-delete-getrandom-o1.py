@@ -1,32 +1,32 @@
 class RandomizedSet:
 
     def __init__(self):
-        self.hash_set = {}
-        self.val_arr = []
+        self.indices = {}
+        self.vals = []
 
     def insert(self, val: int) -> bool:
-        if val in self.hash_set.keys():
+        if val in self.indices.keys():
             return False
-        self.val_arr.append(val)
-        self.hash_set[val] = len(self.val_arr) - 1
+        self.vals.append(val)
+        self.indices[val] = len(self.vals) - 1
         return True
 
     def remove(self, val: int) -> bool:
-        if val not in self.hash_set.keys():
+        if val not in self.indices.keys():
             return False
-        idx = self.hash_set[val]
-        val_at_last_idx = self.val_arr[len(self.val_arr)-1]
-        self.hash_set[val_at_last_idx] = idx
-        self.val_arr[idx], self.val_arr[len(self.val_arr)-1] = self.val_arr[len(self.val_arr)-1], self.val_arr[idx]
-        self.val_arr.pop()
-        del self.hash_set[val]
+        idx_to_remove = self.indices[val]
+        val_at_last_idx = self.vals[-1]
+        self.indices[val_at_last_idx] = idx_to_remove
+        self.vals[idx_to_remove] = self.vals[-1]
+        self.vals.pop()
+        del self.indices[val]
         return True
 
     def getRandom(self) -> int:
-        n = len(self.val_arr)
+        n = len(self.vals)
         rand = randint(0, n-1)
 
-        return self.val_arr[rand]
+        return self.vals[rand]
 
         
 
