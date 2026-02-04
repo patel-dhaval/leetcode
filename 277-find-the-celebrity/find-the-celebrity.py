@@ -9,11 +9,10 @@ class Solution:
             if knows(candidate, idx):
                 candidate = idx
 
-        potential_celebrity = candidate
         for idx in range(n):
-            if idx == potential_celebrity:
+            if idx == candidate:
                 continue
-            if knows(potential_celebrity, idx) or not knows(idx, potential_celebrity):
+            if knows(candidate, idx) or not knows(idx, candidate):
                 return -1
         
-        return potential_celebrity
+        return candidate
