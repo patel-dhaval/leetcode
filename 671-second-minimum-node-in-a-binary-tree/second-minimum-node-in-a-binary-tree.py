@@ -6,35 +6,23 @@
 #         self.right = right
 class Solution:
     def findSecondMinimumValue(self, root: Optional[TreeNode]) -> int:
-        if not root:
-            return -1
-            
-        # The global minimum is always at the root
+        queue = collections.deque()
+        queue.append(root)
         min_val = root.val
-        
-        # Initialize second_min to infinity so we can minimize it later
         second_min = float('inf')
         found_second = False
         
-        # Standard BFS Queue
-        queue = collections.deque([root])
-        
         while queue:
-            node = queue.popleft()
-            
-            # Case 1: We found a value larger than the root (Candidate found)
-            if node.val > min_val:
-                # Update the answer if this is the smallest "second min" seen so far
-                second_min = min(second_min, node.val)
+            curr = queue.popleft()
+            if curr.val > min_val:
+                second_min = min(curr.val, second_min)
                 found_second = True
-                # STOP traversing this branch. Children are guaranteed to be >= node.val
-                continue 
+                continue
             
-            # Case 2: node.val == min_val (Keep searching)
-            # If the value is the same as root, the second min might be deeper in this branch
-            if node.left:
-                queue.append(node.left)
-            if node.right:
-                queue.append(node.right)
-                
+            if curr.left:
+                queue.append(curr.left)
+            if curr.right:
+                queue.append(curr.right)
+
         return second_min if found_second else -1
+            
