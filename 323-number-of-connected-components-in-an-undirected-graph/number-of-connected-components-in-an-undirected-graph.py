@@ -1,26 +1,30 @@
 class Solution:
-    def countComponents(self, n: int, edges: List[List[int]]) -> int:        
-        adj = [[] for _ in range(n)]
-        for u, v in edges:
-            adj[u].append(v)
-            adj[v].append(u)
-        
-        visit = set()
-        def dfs(node):
-            if node in visit:
-                return
+    def countComponents(self, n: int, edges: List[List[int]]) -> int:
+        visited = set()
 
-            visit.add(node)
-            for nei in adj[node]:
-                if nei not in visit:
-                    dfs(nei)
+        adj_list = {i: [] for i in range(n)}
+
+        for src, dst in edges:
+            adj_list[src].append(dst)
+            adj_list[dst].append(src)
+
+
+        def dfs(node):
+            if node in visited:
+                return 
+            
+            visited.add(node)
+
+            for neighbour in adj_list[node]:
+                if neighbour not in visited:
+                    dfs(neighbour)
+            
             return
         
-        component = 0
-        
+        component_count = 0
         for i in range(n):
-            if i not in visit:
+            if i not in visited:
                 dfs(i)
-                component +=1
+                component_count += 1
         
-        return component
+        return component_count
