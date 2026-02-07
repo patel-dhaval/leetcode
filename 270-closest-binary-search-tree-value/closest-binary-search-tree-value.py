@@ -16,9 +16,13 @@ class Solution:
                 closest = node.val
             elif abs(target - node.val) == abs(target - closest):
                 closest = min(closest, node.val)
-                
-            if node.left: stack.append(node.left)
-            if node.right: stack.append(node.right)
+                                 
+            if target > node.val:
+                if node.right:
+                    stack.append(node.right)
+            elif target < node.val:
+                if node.left:
+                    stack.append(node.left)
             
         return closest
 
