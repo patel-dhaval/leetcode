@@ -6,23 +6,28 @@
 #         self.right = right
 class Solution:
     def findSecondMinimumValue(self, root: Optional[TreeNode]) -> int:
-        queue = collections.deque()
-        queue.append(root)
-        min_val = root.val
-        second_min = float('inf')
-        found_second = False
+        if not root:
+            return -1
         
-        while queue:
-            curr = queue.popleft()
-            if curr.val > min_val:
-                second_min = min(curr.val, second_min)
-                found_second = True
+        first_min = root.val
+        second_min = float('inf')
+        found_min = False
+        stack = []
+        stack.append(root)
+        while stack:
+            curr = stack.pop()
+            if curr.val > first_min:
+                second_min = min(second_min, curr.val)
+                found_min = True
                 continue
-            
-            if curr.left:
-                queue.append(curr.left)
-            if curr.right:
-                queue.append(curr.right)
+            else:
+                if curr.left:
+                    stack.append(curr.left)
+                if curr.right:
+                    stack.append(curr.right)
+        
+        return second_min if found_min else -1
 
-        return second_min if found_second else -1
             
+
+
