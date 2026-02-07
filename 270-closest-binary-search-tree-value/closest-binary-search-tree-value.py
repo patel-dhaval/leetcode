@@ -10,7 +10,7 @@ class Solution:
 
         stack = []
         curr = root
-        stack.append(curr)
+        # stack.append(curr)
         while stack or curr:
             if curr:
                 stack.append(curr)
