@@ -9,9 +9,13 @@ class Solution:
         
         if not root:
             return None
+        
+        if not root.left and not root.right:
+            return root
 
-        curr = root
         stack = []
+        new_root = None
+        curr = root
 
         while curr:
             stack.append(curr)
@@ -19,9 +23,10 @@ class Solution:
         
         new_root = stack.pop()
         while stack:
-            node = stack.pop()
-            node.left.left = node.right
-            node.left.right = node
-            node.left, node.right = None, None
-
+                node = stack.pop()
+                node.left.left = node.right
+                node.left.right = node
+                node.left = None
+                node.right = None
+        
         return new_root
