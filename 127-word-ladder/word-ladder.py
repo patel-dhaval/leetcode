@@ -1,35 +1,36 @@
+"""
+Begin word -> possible combination -> check dict, if present move and increase counter else backtrack
+
+"""
+
 class Solution:
     def ladderLength(self, beginWord: str, endWord: str, wordList: List[str]) -> int:
-        # CRITICAL FIX 1: Convert to Set for O(1) lookups
-        wordSet = set(wordList)
-        
-        if endWord not in wordSet:
+        if endWord not in wordList:
             return 0
         
-        queue = collections.deque([(beginWord, 1)])
+        wordList = set(wordList)
+        queue = collections.deque()
         visited = set([beginWord])
-        
         possible_chars = "abcdefghijklmnopqrstuvwxyz"
-        
+        queue.append([beginWord,1])
         while queue:
             curr, steps = queue.popleft()
-            
             if curr == endWord:
                 return steps
-            
-            for i in range(len(curr)):
-                original_char = curr[i]
-                
-                for char in possible_chars:
-                    if char == original_char: continue
-                    
-                    new_word = curr[:i] + char + curr[i+1:]
 
-                    if new_word == endWord:
-                        return steps + 1
+            for idx in range(len(curr)):
+                original_char = curr[idx]
+                
+                for c in possible_chars:
+                    if c == original_char: continue
                     
-                    if new_word in wordSet and new_word not in visited:
-                        visited.add(new_word)
-                        queue.append((new_word, steps + 1))
-                        
+                    combination = curr[:idx] + c + curr[idx+1:]
+                    
+                    if combination == endWord:
+                        return steps + 1
+
+                    if combination in wordList and combination not in visited:
+                        visited.add(combination)
+                        queue.append((combination, steps+1))
+                
         return 0
