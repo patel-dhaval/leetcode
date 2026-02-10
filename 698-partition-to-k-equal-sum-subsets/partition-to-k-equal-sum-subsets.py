@@ -4,39 +4,42 @@ class Solution:
         if sum_nums % k != 0:
             return False
         
-        nums.sort(reverse=True)
         target = sum_nums // k
 
         if nums[0] > target: 
             return False
             
-        used = [False] * len(nums)
+        bucket_sums = [0] * k
         
-        def backtrack(idx, k, subsetSum):
-            
-            if k == 0:
+        nums.sort(reverse = True)
+
+        # 3. Recursion: Try to put 'nums[index]' into one of the k buckets
+        def backtrack(index):
+            # Base Case: We placed all numbers successfully!
+            if index == len(nums):
                 return True
-
-            if subsetSum == target:
-                return backtrack(0, k-1, 0)
-            
-            for j in range(idx, len(nums)):
-                if used[j] or subsetSum + nums[j] > target:
-                    continue
-
-                if j > idx and nums[j] == nums[j-1] and not used[j-1]:
-                    continue
                 
-                used[j] = True
-
-                if backtrack(j+1, k, subsetSum + nums[j]):
-                    return True
-
-                used[j] = False
-
-                if subsetSum == 0:
-                    return False
-
+            num = nums[index]
+            
+            # Try every bucket
+            for i in range(k):
+                # Check if it fits
+                if bucket_sums[i] + num <= target:
+                    bucket_sums[i] += num
+                    
+                    # If this placement leads to a solution, return True
+                    if backtrack(index + 1): 
+                        return True
+                    
+                    # Backtrack: Remove it and try the next bucket
+                    bucket_sums[i] -= num
+                    
+                    # Optimization: If this bucket is empty and we couldn't 
+                    # make it work, putting 'num' in the next empty bucket 
+                    # is the same thing. Stop to save time.
+                    if bucket_sums[i] == 0:
+                        break
+                        
             return False
 
-        return backtrack(0, k, 0)
+        return backtrack(0)
