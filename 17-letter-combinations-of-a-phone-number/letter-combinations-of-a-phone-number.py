@@ -6,11 +6,10 @@ class Solution:
 
         def backtrack(idx, char_arr):
             if idx > len(digits):
-                res.append("".join(char_arr.copy()))
                 return
             
             if len(char_arr) == len(digits):
-                res.append("".join(char_arr.copy()))
+                res.append("".join(char_arr))
                 return
 
             for j in range(idx, len(digits)):
