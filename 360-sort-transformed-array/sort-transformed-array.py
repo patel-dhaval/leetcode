@@ -1,3 +1,12 @@
+"""
+Dry Run:
+nums = [-4,-2,2,4], a = 1, b = 3, c = 5
+index_ptr = 3,2,1,0
+val_l = 3
+val_r = 3
+res = [3,9,15,33]
+"""
+
 class Solution:
     def sortTransformedArray(self, nums: List[int], a: int, b: int, c: int) -> List[int]:
             n = len(nums)
