@@ -1,41 +1,44 @@
 class MaxStack:
 
     def __init__(self):
-        self.stack = []
         self.heap = []
+        self.stack = []
         self.cnt = 0
-        self.soft_deleted = set()
+        self.deleted_nodes = set()
+        heapq.heapify(self.heap)
 
     def push(self, x: int) -> None:
-        heapq.heappush(self.heap, (-x, -self.cnt))
         self.stack.append((x, self.cnt))
+        heapq.heappush(self.heap, (-x, -self.cnt))
         self.cnt += 1
 
     def pop(self) -> int:
-        while self.stack and self.stack[-1][1] in self.soft_deleted:
+        while self.stack and self.stack[-1][1] in self.deleted_nodes:
             self.stack.pop()
-        val, idx = self.stack.pop()
-        self.soft_deleted.add(idx)
+
+        val, key = self.stack.pop()
+        self.deleted_nodes.add(key)
+
         return val
 
     def top(self) -> int:
-        while self.stack and self.stack[-1][1] in self.soft_deleted:
+        while self.stack and self.stack[-1][1] in self.deleted_nodes:
             self.stack.pop()
-        val, idx = self.stack[-1]
-        return val
+
+        return self.stack[-1][0]
 
     def peekMax(self) -> int:
-        while self.heap and -self.heap[0][1] in self.soft_deleted:
+        while self.heap and -self.heap[0][1] in self.deleted_nodes:
             heapq.heappop(self.heap)
 
         return -self.heap[0][0]
 
     def popMax(self) -> int:
-        while self.heap and -self.heap[0][1] in self.soft_deleted:
+        while self.heap and -self.heap[0][1] in self.deleted_nodes:
             heapq.heappop(self.heap)
 
-        val, idx =  heapq.heappop(self.heap)
-        self.soft_deleted.add(-idx)
+        val, key = heapq.heappop(self.heap)
+        self.deleted_nodes.add(-key)
         return -val
 
 
