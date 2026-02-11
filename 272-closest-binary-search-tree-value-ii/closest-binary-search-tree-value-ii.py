@@ -1,27 +1,30 @@
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
 class Solution:
     def closestKValues(self, root: Optional[TreeNode], target: float, k: int) -> List[int]:
-        deq = collections.deque()
-        
+        queue = collections.deque()
+
         def inorder(node):
-            if not node: 
+            if not node:
                 return
-            
+
             inorder(node.left)
-                        
-            if len(deq) == k:
-                # Check if the current node is "worse" than the furthest node in our window (deq[0])
-                if abs(target - node.val) < abs(target - deq[0]):
-                    # Current node is BETTER. Remove the "loser" (furthest away) and add the winner.
-                    deq.popleft()
-                    deq.append(node.val)
+
+            queue.append(node.val)
+
+            if len(queue) > k:
+                if abs(queue[0] - target) > abs(queue[-1]- target):
+                    queue.popleft()
                 else:
-                    # Current node is WORSE.
-                    # Since the tree is sorted, every node after this will be EVEN WORSE.
-                    return 
-            else:
-                deq.append(node.val)
-                
+                    queue.pop()
+            
             inorder(node.right)
         
         inorder(root)
-        return list(deq)
+
+        return list(queue)
+            
