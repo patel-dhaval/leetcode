@@ -21,6 +21,7 @@ class Solution:
                     queue.popleft()
                 else:
                     queue.pop()
+                    return
             
             inorder(node.right)
         
