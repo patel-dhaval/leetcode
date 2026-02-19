@@ -6,26 +6,24 @@
 #         self.right = right
 class Solution:
     def closestKValues(self, root: Optional[TreeNode], target: float, k: int) -> List[int]:
-        queue = collections.deque()
+        deq = collections.deque()
 
-        def inorder(node):
-            if not node:
+        def inorder(root):
+            if not root:
                 return
 
-            inorder(node.left)
+            inorder(root.left)
 
-            queue.append(node.val)
+            deq.append(root.val)
 
-            if len(queue) > k:
-                if abs(queue[0] - target) > abs(queue[-1]- target):
-                    queue.popleft()
+            while len(deq) > k:
+                if abs(deq[0] - target) > abs(deq[-1] - target):
+                    deq.popleft()
                 else:
-                    queue.pop()
-                    return
+                    deq.pop()
             
-            inorder(node.right)
-        
+            inorder(root.right)
+
         inorder(root)
 
-        return list(queue)
-            
+        return list(deq)
