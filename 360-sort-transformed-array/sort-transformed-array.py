@@ -15,7 +15,7 @@ class Solution:
     def sortTransformedArray(self, nums: List[int], a: int, b: int, c: int) -> List[int]:
         """
         since the equation is a parabola, the a value here would control the direction, and the max value would lie on one of the extremes.
-        If a is positive, then the max value would be present on the right extreme, else it would be on the left extreme
+        If a is positive, then the max value would be present on the right extreme, else if a is negative then the smallest value would be on the left most side.
         """
 
         res = [0] * len(nums)
