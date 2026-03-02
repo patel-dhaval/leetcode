@@ -1,18 +1,17 @@
+"""
+AAAAACCCCC
+"""
 class Solution:
     def findRepeatedDnaSequences(self, s: str) -> List[str]:
-        i = 0
         seen = set()
-        res = set()
-        if len(s) < 10:
-            return []
+        repeated = set()
 
-        for j in range(len(s)):
-            if j - i + 1 == 10:
-                seq = s[i:j+1]
-                if seq in seen:
-                    res.add(seq)
-                else:
-                    seen.add(seq)
-                i+=1
+        for idx in range(0, len(s) - 9):
+            word = s[idx: idx+10]
+
+            if word in seen:
+                repeated.add(word)
+            else:
+                seen.add(word)
         
-        return list(res)
+        return list(repeated)
