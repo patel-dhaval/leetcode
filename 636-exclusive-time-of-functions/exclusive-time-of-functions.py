@@ -1,30 +1,28 @@
 """
 DRY RUN:
-n = 2, logs = ["0:start:0","1:start:2","1:end:5","0:end:6"]
-
-res = [,4]
+res = [8]
 stack = [0]
-prev_time = 5
+prev_time = 7
+time_stamp = 7
 """
-
 class Solution:
     def exclusiveTime(self, n: int, logs: List[str]) -> List[int]:
         res = [0] * n
-        prev_time = 0
         stack = []
+        prev_time = 0
         for log in logs:
-            idx, function, time_stamp = log.split(":")
-            idx = int(idx)
-            timestamp = int(time_stamp)
+            tid, function,timestamp = log.split(":")
+            tid = int(tid)
+            timestamp = int(timestamp)
+
             if function == "start":
                 if stack:
-                    curr_idx = stack[-1]
-                    res[curr_idx] += timestamp - prev_time
-                stack.append(idx)
+                    res[stack[-1]] += timestamp - prev_time
+                stack.append(tid)
                 prev_time = timestamp
             else:
-                curr_idx = stack.pop()
-                res[curr_idx] += timestamp - prev_time + 1
+                res[stack[-1]] += timestamp - prev_time + 1
+                stack.pop()
                 prev_time = timestamp + 1
-        
+
         return res
