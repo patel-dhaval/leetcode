@@ -1,22 +1,27 @@
+"""
+DRY RUN:
+zero_count = 3
+idx = 5
+jdx = 10
+res = 6
+"""
 class Solution:
     def longestOnes(self, nums: List[int], k: int) -> int:
-        i = 0
+        n = len(nums)
         zero_count = 0
-        max_ones = 0
+        idx = 0
+        res = 0
 
-        for j in range(len(nums)):
-            if nums[j] == 1:
-                max_ones = max(max_ones, j-i+1)
-
-            elif nums[j] == 0:
+        for jdx in range(n):
+            if nums[jdx] == 0:
                 zero_count += 1
-
-                while zero_count > k:
-                    if nums[i] == 0:
-                        zero_count -= 1
-                    i += 1
+            
+            while zero_count > k:
+                if nums[idx] == 0:
+                    zero_count -= 1
+                
+                idx += 1
+            
+            res = max(res, jdx - idx + 1)
         
-            max_ones = max(max_ones, j-i+1)
-        
-        return max_ones
-
+        return res
