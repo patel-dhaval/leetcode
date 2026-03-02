@@ -1,23 +1,27 @@
 class Solution:
     def searchRange(self, nums: List[int], target: int) -> List[int]:
-        def search(findFirst):
+        def search(first_position):
+            low = 0
+            high = len(nums) - 1
+
+            
             ans = -1
-            low, high = 0, len(nums) - 1
             while low <= high:
-                mid = (low + high) // 2
-                if nums[mid] == target:
+                mid = (low + high)//2
+                if target == nums[mid]:
                     ans = mid
-                    if findFirst:
-                        high = mid - 1 # Keep looking left
+                    
+                    if first_position:
+                        high = mid - 1
                     else:
-                        low = mid + 1  # Keep looking right
-                elif nums[mid] < target:
+                        low = mid + 1
+                elif target > nums[mid]:
                     low = mid + 1
                 else:
                     high = mid - 1
+            
             return ans
-        
-        start_value = search(1)
-        end_value = search(0)
 
-        return [start_value, end_value]
+
+        return [search(1), search(0)]
+
