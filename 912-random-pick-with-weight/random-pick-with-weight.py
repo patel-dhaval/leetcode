@@ -10,14 +10,14 @@ class Solution:
         self.total_sum = self.prefix_arr[-1]
 
     def pickIndex(self) -> int:
-        self.rand_val = random.random() * self.total_sum
-        #self.rand_val = randint(1, self.prefix_arr[-1])
+        #self.rand_val = random.random() * self.total_sum
+        self.rand_val = randint(1, self.prefix_arr[-1])
         return self.search(self.rand_val)
     
     def search(self, target: int):
         low, high = 0, len(self.prefix_arr) - 1
 
-        while low <= high:
+        while low < high:
             mid = (low+high)//2
             print(self.prefix_arr[mid], target)
             if target == self.prefix_arr[mid]:
@@ -25,7 +25,7 @@ class Solution:
             elif target > self.prefix_arr[mid]:
                 low = mid + 1
             else:
-                high = mid - 1
+                high = mid
         
         return low
 
