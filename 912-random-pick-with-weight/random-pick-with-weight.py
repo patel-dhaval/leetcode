@@ -18,7 +18,6 @@ class Solution:
 
         while low < high:
             mid = (low+high)//2
-            print(self.prefix_arr[mid], target)
             if target == self.prefix_arr[mid]:
                 return mid
             elif target > self.prefix_arr[mid]:
