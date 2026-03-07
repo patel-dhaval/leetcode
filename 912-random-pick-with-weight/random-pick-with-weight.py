@@ -16,14 +16,14 @@ class Solution:
     def search(self, target: int):
         low, high = 0, len(self.prefix_arr) - 1
 
-        while low < high:
+        while low <= high:
             mid = (low+high)//2
             if target == self.prefix_arr[mid]:
                 return mid
             elif target > self.prefix_arr[mid]:
                 low = mid + 1
             else:
-                high = mid
+                high = mid - 1
         
         return low
 
