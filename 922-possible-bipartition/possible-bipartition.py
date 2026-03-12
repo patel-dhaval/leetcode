@@ -1,35 +1,26 @@
-from collections import defaultdict, deque
-from typing import List
-
 class Solution:
     def possibleBipartition(self, n: int, dislikes: List[List[int]]) -> bool:
-        # 1. Build the adjacency list (undirected graph)
-        adj = defaultdict(list)
-        for u, v in dislikes:
-            adj[u].append(v)
-            adj[v].append(u)
-            
-        # Array to store colors: -1 means uncolored, 0 is Red, 1 is Blue
-        colors = [-1] * (n + 1)
+        adj_list = [[] for _ in range(n+1)]
+        queue = collections.deque()
+
+        for src, dst in dislikes:
+            adj_list[src].append(dst)
+            adj_list[dst].append(src)
+
+        colors = [-1] * (n+1)
+
+        for idx in range(1, n+1):
+            if colors[idx] == -1:
+                queue.append(idx)
+                colors[idx] = 0
+            while queue:
+                curr = queue.popleft()
+                for neighbour in adj_list[curr]:
+                    if colors[neighbour] == colors[curr]:
+                        return False
+                    if colors[neighbour] == -1:
+                        colors[neighbour] = 1 - colors[curr]
+                        queue.append(neighbour)
         
-        # 2. Check every person (in case of disconnected graph)
-        for i in range(1, n + 1):
-            if colors[i] == -1:
-                # Start a BFS from this uncolored person
-                queue = deque([i])
-                colors[i] = 0 # Paint them Red
-                
-                while queue:
-                    current = queue.popleft()
-                    
-                    for neighbor in adj[current]:
-                        # If the neighbor has the SAME color, it's impossible!
-                        if colors[neighbor] == colors[current]:
-                            return False
-                        
-                        # If the neighbor is uncolored, paint them the OPPOSITE color
-                        if colors[neighbor] == -1:
-                            colors[neighbor] = 1 - colors[current]
-                            queue.append(neighbor)
-                            
+        
         return True
