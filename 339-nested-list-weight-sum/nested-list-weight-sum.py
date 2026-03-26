@@ -41,28 +41,20 @@
 #        :rtype List[NestedInteger]
 #        """
 
-"""
-nestedList = [6]
-temp_sum = 18
-final_sum = 27
-temp_list = []
-level = 3
-"""
-
 class Solution:
     def depthSum(self, nestedList: List[NestedInteger]) -> int:
-        final_sum = 0
         level = 1
+        total_sum = 0
 
         while nestedList:
             temp_list = []
-            for n in nestedList:
-                if n.isInteger():
-                    temp_sum = level * n.getInteger()
-                    final_sum += temp_sum
+
+            for val in nestedList:
+                if val.isInteger():
+                    total_sum += level * val.getInteger()
                 else:
-                    temp_list.extend(n.getList())
+                    temp_list.extend(val.getList())
             nestedList = temp_list
             level += 1
-        
-        return final_sum
+
+        return total_sum
