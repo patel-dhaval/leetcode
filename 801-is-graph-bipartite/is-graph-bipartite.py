@@ -1,14 +1,7 @@
 class Solution:
     def isBipartite(self, graph: List[List[int]]) -> bool:
         n = len(graph)
-        
-        adj_list = [set() for _ in range(n)]
-        queue = collections.deque()
-        for idx, nodes in enumerate(graph):
-            for node in nodes:
-                adj_list[idx].add(node)
-
-
+        queue = collections.deque()        
         colors = [-1] * (n)
 
         for idx in range(0, n):
@@ -17,7 +10,7 @@ class Solution:
                 colors[idx] = 0
             while queue:
                 curr = queue.popleft()
-                for neighbour in adj_list[curr]:
+                for neighbour in graph[curr]:
                     if colors[neighbour] == colors[curr]:
                         return False
                     if colors[neighbour] == -1:
