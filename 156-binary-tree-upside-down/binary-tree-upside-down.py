@@ -6,15 +6,11 @@
 #         self.right = right
 class Solution:
     def upsideDownBinaryTree(self, root: Optional[TreeNode]) -> Optional[TreeNode]:
-        
         if not root:
             return None
-        
-        if not root.left and not root.right:
-            return root
-
+            
         stack = []
-        new_root = None
+
         curr = root
 
         while curr:
@@ -22,11 +18,12 @@ class Solution:
             curr = curr.left
         
         new_root = stack.pop()
+
         while stack:
-                node = stack.pop()
-                node.left.left = node.right
-                node.left.right = node
-                node.left = None
-                node.right = None
+            node = stack.pop()
+            node.left.left = node.right
+            node.left.right = node
+            node.left, node.right = None, None
         
+
         return new_root
