@@ -22,7 +22,4 @@ class Solution:
             return 1 + height
         
         dfs(root)
-        for k, v in heights.items():
-            res.append(v)
-        
-        return res
+        return list(heights.values())
