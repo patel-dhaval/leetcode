@@ -4,47 +4,25 @@
 #         self.val = val
 #         self.left = left
 #         self.right = right
-
 class Solution:
     def findLeaves(self, root: Optional[TreeNode]) -> List[List[int]]:
-        """
-        BruteForce
-        """
-        # res = []
-        # def dfs(node):
+        heights = collections.defaultdict(list)
+        res = []
+        def dfs(node):
+            nonlocal heights
+            if not node:
+                return 0
             
-        #     if not node:
-        #         return
-        #     if not node.left and not node.right:
-        #         res[-1].append(node.val)
-        #         return True
-            
-        #     left = dfs(node.left)
-        #     right = dfs(node.right)
-            
-        #     if left:
-        #         node.left = None
-        #     if right:
-        #         node.right = None
+            lh = dfs(node.left)
+            rh = dfs(node.right)
+            height = max(lh, rh)
+
+            heights[height].append(node.val)
+
+            return 1 + height
         
+        dfs(root)
+        for k, v in heights.items():
+            res.append(v)
         
-        # while root.left or root.right:
-        #     res.append([])
-        #     dfs(root)
-        
-        # res.append([root.val])
-        # return res
-        
-        output = collections.defaultdict(list)
-    
-        def dfs(node, height):
-            if not node: 
-                return height 
-            left = dfs(node.left, height)
-            right = dfs(node.right, height)
-            height = max(left, right)
-            output[height].append(node.val)
-            return height + 1
-        
-        dfs(root, 0)
-        return list(output.values())
+        return res
