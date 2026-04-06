@@ -1,8 +1,8 @@
 class DSU:
     def __init__(self, n):
-        self.par = {}
-        self.rank = {}
-
+        self.par = [[] for _ in range(n)]
+        self.rank = [[] for _ in range(n)]
+        self.components = n
         for idx in range(n):
             self.par[idx] = idx
             self.rank[idx] = 1
@@ -22,6 +22,8 @@ class DSU:
 
         if pu == pv:
             return False
+
+        self.components -= 1
      
         if self.rank[pu] > self.rank[pv]:
             self.par[pv] = pu
@@ -32,7 +34,9 @@ class DSU:
             self.rank[pu] += 1
         
         return True
-
+    
+    def comps(self):
+        return self.components
 
 class Solution:
     def validTree(self, n: int, edges: List[List[int]]) -> bool:
@@ -45,4 +49,4 @@ class Solution:
             if not dsu.union(u,v):
                 return False
         
-        return True
+        return dsu.comps() == 1
