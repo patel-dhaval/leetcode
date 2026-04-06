@@ -1,25 +1,48 @@
+class DSU:
+    def __init__(self, n):
+        self.par = {}
+        self.rank = {}
+
+        for idx in range(n):
+            self.par[idx] = idx
+            self.rank[idx] = 1
+
+    def find(self, node):
+        p = self.par[node]
+
+        while p != self.par[p]:
+            self.par[p] = self.par[self.par[p]]
+            p = self.par[p]
+        
+        return p
+
+    def union(self, u, v):
+        pu = self.find(u)
+        pv = self.find(v)
+
+        if pu == pv:
+            return False
+     
+        if self.rank[pu] > self.rank[pv]:
+            self.par[pv] = pu
+        elif  self.rank[pu] < self.rank[pv]:
+            self.par[pu] = pv
+        else:
+            self.par[pv] = pu
+            self.rank[pu] += 1
+        
+        return True
+
+
 class Solution:
     def validTree(self, n: int, edges: List[List[int]]) -> bool:
-        if len(edges) > n - 1:
+        if len(edges) != n-1:
             return False
-        
-        adj = [[] for _ in range(n)]
+
+        dsu = DSU(n)
+
         for u, v in edges:
-            adj[u].append(v)
-            adj[v].append(u)
+            if not dsu.union(u,v):
+                return False
         
-        visit = set()
-        q = deque([(0, -1)])
-        visit.add(0)
-        
-        while q:
-            node, parent = q.popleft()
-            for nei in adj[node]:
-                if nei == parent:
-                    continue
-                if nei in visit:
-                    return False
-                visit.add(nei)
-                q.append((nei, node))
-        
-        return len(visit) == n
+        return True
