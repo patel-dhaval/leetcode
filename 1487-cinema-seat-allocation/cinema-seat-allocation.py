@@ -1,26 +1,20 @@
-"""
-max_group = 0
-reserved= {1: {2,3,8}, 2: {6}, 3: {1,10}}
-
-"""
 class Solution:
     def maxNumberOfFamilies(self, n: int, reservedSeats: List[List[int]]) -> int:
-        
-        reserved = collections.defaultdict(set)
+        seatmap = collections.defaultdict(set)
+        for seats in reservedSeats:
+            seatmap[seats[0]].add(seats[1])
 
-        for seat in reservedSeats:
-            reserved[seat[0]].add(seat[1])
-        
-        max_groups = (n - len(reserved)) * 2
+        max_seating_possible = (n - len(seatmap)) * 2
 
-        for seats in reserved.values():
-            left = not({2,3,4,5} & seats)
-            mid = not({4,5,6,7} & seats)
-            right = not({6,7,8,9} & seats)
+        for seat in seatmap.values():
+            left = not(seat & {2,3,4,5})
+            mid = not(seat & {4,5,6,7})
+            right = not(seat & {6,7,8,9})
 
             if left and right:
-                max_groups += 2
+                max_seating_possible += 2
             elif left or right or mid:
-                max_groups += 1
+                max_seating_possible += 1
         
-        return max_groups
+        
+        return max_seating_possible
