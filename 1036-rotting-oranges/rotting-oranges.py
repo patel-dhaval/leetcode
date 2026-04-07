@@ -6,7 +6,6 @@ class Solution:
         fresh_oranges = 0
         rotting_oranges = 0
         queue = collections.deque()
-        visited = set()
 
         for r in range(rows):
             for c in range(cols):
@@ -27,12 +26,11 @@ class Solution:
             time += 1
             for _ in range(len(queue)):
                 r,c = queue.popleft()
-                visited.add((r,c))
                 for dr, dc in neighbours:
                     nr = r + dr
                     nc = c + dc
 
-                    if min(nr, nc) < 0 or nr == rows or nc == cols or grid[nr][nc] == 0 or grid[nr][nc] == 2 or (nr, nc ) in visited:
+                    if min(nr, nc) < 0 or nr == rows or nc == cols or grid[nr][nc] == 0 or grid[nr][nc] == 2:
                         continue
                     
                     grid[nr][nc] = 2
