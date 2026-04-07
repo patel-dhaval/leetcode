@@ -9,7 +9,7 @@ class Solution:
         colors = [-1] * (n + 1)
         queue = collections.deque()
 
-        for idx in range(0, n):
+        for idx in range(1, n+1):
             if colors[idx] != -1:
                 continue
 
